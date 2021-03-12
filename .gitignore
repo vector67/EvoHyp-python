@@ -1,2 +1,5 @@
 /venv*
 /build
+.DS_STORE
+
+__pycache__
