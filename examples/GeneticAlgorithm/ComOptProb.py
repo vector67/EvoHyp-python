@@ -10,7 +10,7 @@
 # package: solveproblem
 # Import statements
 from ProblemDomain import ProblemDomain
-from examples.ComOptSoln import ComOptSoln
+from examples.GeneticAlgorithm.ComOptSoln import ComOptSoln
 
 
 class ComOptProb(ProblemDomain):

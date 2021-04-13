@@ -11,7 +11,7 @@
 # package: solveproblem
 # Import statements
 from GenAlg.GenAlg import GenAlg
-from examples.ComOptProb import ComOptProb
+from examples.GeneticAlgorithm.ComOptProb import ComOptProb
 
 
 class GeneticAlgorithmExample(object):
@@ -23,7 +23,7 @@ class GeneticAlgorithmExample(object):
         seed = 23498263498
         heuristics = "abc"
         schh = GenAlg(seed, heuristics)
-        schh.set_parameters("../GenAlg/Parameters.txt")
+        schh.set_parameters("../../GenAlg/Parameters.txt")
         schh.set_problem(problem)
         solution = schh.evolve()
         print("Best Solution")
