@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-""" generated source for module ComOptSoln """
-# 
+#
 #  * This class implements the InitialSoln abstract class and is used to store
 #  * details of the initial solution.
 #  *
@@ -16,8 +14,6 @@ from InitialSolution import InitialSolution
 
 
 class ComOptSoln(InitialSolution):
-    """ generated source for class ComOptSoln """
-    # /
     # Data elements
     # Stores the heuristic combination that will be used to create an initial
     # solution.    
@@ -36,34 +32,24 @@ class ComOptSoln(InitialSolution):
     # solved that is different from the fitness or needed to calculate the fitness.
     # For example, for the examination timetabling problem the hard and soft
     # constraint cost also needs to be stored.
-    # /
     # Implementation of abstract methods needed to extend InitialSoln
-    # /
     def get_fitness(self) -> float:
         return self.fitness
 
-    # /
-    # /
     def set_heuristic_combination(self, heuristic_combination: str):
         # Implements the abstract method to store the heuristic combination used to
         # create an initial solution.
         self.heuristic_combination = heuristic_combination
 
-    # /
-    # /
     def get_heuristic_combination(self) -> str:
         # Implements the abstract method to return the heuristic combination used to
         # create the solution.
         return self.heuristic_combination
 
-    # /
-    # /
     def get_solution(self) -> object:
         # Implements the abstract method to return a solution.
         return self.initial_solution
 
-    # /
-    # /
     def fitter(self, other: InitialSolution):
         # This method is used to compare two intial solutions to determine which of
         # the two is fitter. 
@@ -74,9 +60,7 @@ class ComOptSoln(InitialSolution):
         else:
             return 0
 
-    # /
     # Methods in addition to the abstract methods that need to be implemented.
-    # /
     def create_solution(self):
         # This method creates a solution using the heuristic combination.
         # Construct a solution to the problem using the heuristic combination.
@@ -85,6 +69,4 @@ class ComOptSoln(InitialSolution):
         # Calculate the fitness of the constructed solution. This is just an example
         # so simply adds the length of the solution to a random double.
         self.fitness = len(temp)
-
-    # /
 

@@ -18,7 +18,6 @@ from ProblemDomain import ProblemDomain
 
 
 class GenAlg(object):
-    # /
     # Data elements
     # 
     # Stores the population size.
@@ -107,9 +106,7 @@ class GenAlg(object):
     #      
     print_: bool
 
-    # /
-    # /
-    # 
+    #
     # This is the constructor for the class.
     #
     # @param seed       The seed for the random number generator.
@@ -126,10 +123,8 @@ class GenAlg(object):
         self.population_size = 0
         self.allow_duplicates = False
 
-    # /
     # Methods for setting parameter values for the genetic algorithm
-    # /
-    # 
+    #
     # Reads the parameters from a file and stores them as data element.
     #
     # @param parameterFile The name of the file the parameter values are stored
@@ -150,9 +145,7 @@ class GenAlg(object):
         except IOError as ioe:
             print("The file " + parameter_file + " cannot be found. " + "Please check the details provided.", ioe)
 
-    # /
-    # /
-    # 
+    #
     # Sets the number of generations size.
     #
     # @param noOfGenerations Parameter value for the number of generations.
@@ -160,17 +153,13 @@ class GenAlg(object):
     def set_no_of_generations(self, no_of_generations):
         self.no_of_generations = no_of_generations
 
-    # /
-    # /
-    # 
+    #
     # @return The population size.
     #      
     def get_population_size(self):
         return self.population_size
 
-    # /
-    # /
-    # 
+    #
     # Sets the population size.
     #
     # @param populationSize Parameter value for the population size.
@@ -178,17 +167,13 @@ class GenAlg(object):
     def set_population_size(self, population_size):
         self.population_size = population_size
 
-    # /
-    # /
-    # 
+    #
     # @return The tournament size.
     #      
     def get_tournament_size(self):
         return self.tournament_size
 
-    # /
-    # /
-    # 
+    #
     # Sets the tournament size.
     #
     # @param tournamentSize Parameter value for the tournament size.
@@ -196,25 +181,19 @@ class GenAlg(object):
     def set_tournament_size(self, tournament_size):
         self.tournament_size = tournament_size
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the number of generations.
     #      
     def get_no_of_generations(self):
         return self.no_of_generations
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the mutation rate.
     #      
     def get_mutation_rate(self):
         return self.mutation_rate
 
-    # /
-    # /
-    # 
+    #
     # Sets the mutation rate.
     #
     # @param mutationRate Parameter value for the mutation rate. The value must be
@@ -223,17 +202,13 @@ class GenAlg(object):
     def set_mutation_rate(self, mutation_rate):
         self.mutation_rate = mutation_rate
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the crossover rate.
     #      
     def get_crossover_rate(self):
         return self.crossover_rate
 
-    # /
-    # /
-    # 
+    #
     # Sets the crossover rate.
     #
     # @param crossoverRate Parameter value for the crossover rate. The value must
@@ -242,26 +217,20 @@ class GenAlg(object):
     def set_crossover_rate(self, crossover_rate):
         self.crossover_rate = crossover_rate
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the reproduction rate.
     #      
     def get_reproduction_rate(self):
         return self.reproduction_rate
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the initial maximum length permitted for heuristic
     # combinations created in the initial population.
     #      
     def get_initial_max_length(self):
         return self.initial_max_length
 
-    # /
-    # /
-    # 
+    #
     # Sets the maximum length of chromosome in the initial population.
     #
     # @param initialMaxLength Parameter value specifying the maximum length
@@ -270,17 +239,13 @@ class GenAlg(object):
     def set_initial_max_length(self, initial_max_length):
         self.initial_max_length = initial_max_length
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the maximum offspring length.
     #      
     def get_offspring_max_length(self):
         return self.offspring_max_length
 
-    # /
-    # /
-    # 
+    #
     # Sets the maximum length of the offspring produced by the genetic operators.If
     # the offspring size exceeds this length the substring equal to this value is
     # returned.
@@ -291,17 +256,13 @@ class GenAlg(object):
     def set_offspring_max_length(self, offspring_max_length):
         self.offspring_max_length = offspring_max_length
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the mutation length.
     #      
     def get_mutation_length(self):
         return self.mutation_length
 
-    # /
-    # /
-    # 
+    #
     # Sets the maximum permitted length for the new substring created by mutation
     # to be inserted at a randomly selected point in a copy of the parent.The
     # length of the substring to be inserted is randomly selected to be between 1
@@ -312,18 +273,14 @@ class GenAlg(object):
     def set_mutation_length(self, mutation_length):
         self.mutation_length = mutation_length
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the value of the Boolean flag that is used to specify if
     # duplicates are allowed or not.
     #      
     def get_allow_duplicates(self):
         return self.allow_duplicates
 
-    # /
-    # /
-    # 
+    #
     # This method sets the Boolean flag indicating whether duplicates are allowed
     # in the initial population of not.
     #
@@ -333,18 +290,14 @@ class GenAlg(object):
     def set_allow_duplicates(self, allow_duplicates):
         self.allow_duplicates = allow_duplicates
 
-    # /
-    # /
-    # 
+    #
     # @return Returns the value of the flag print used to determine whether to
     # print output to the screen.
     #      
     def get_print(self):
         return self.print_
 
-    # /
-    # /
-    # 
+    #
     # Sets the flag for printing output for each generation to the screen.If it is
     # set to <tt>true</tt> output is printed.If it is set to <tt>false</tt> output
     # is not printed.The default is <tt>true</tt>.The output printed to the screen
@@ -357,10 +310,8 @@ class GenAlg(object):
     def set_print(self, print_):
         self.print_ = print_
 
-    # /
     # Methods for setting problem specific information
-    # /
-    # 
+    #
     # This method sets the string of characters, each representing a low-level
     # heuristic for the problem domain.
     #
@@ -370,9 +321,7 @@ class GenAlg(object):
     def set_heuristics(self, heuristics):
         self.heuristics = heuristics
 
-    # /
-    # /
-    # 
+    #
     # This method sets the string of characters, each representing a low-level
     # heuristic for the problem domain.
     #
@@ -382,9 +331,7 @@ class GenAlg(object):
     def set_problem(self, problem):
         self.problem = problem
 
-    # /
     # Methods for creating the initial population
-    # /
     def exists(self, heuristic_combination, pos):
         # Checks whether the Comb already exists in the population.
         count = 0
