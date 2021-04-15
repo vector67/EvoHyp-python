@@ -6,7 +6,6 @@
 #  * Nelishia Pillay
 #  * 11 September 2016
 #  
-# package: genprog
 
 # 
 #  *This class implements a genetic programming generation constructive 
@@ -37,7 +36,7 @@ class GenProg(object):
     #      *Relational operators first argument of the "if" operator: <, >, ==, //!=, >=,
     #      *<=.
     #      
-    opts: List[str]
+    operators: List[str]
 
     # 
     #      * Stores the problem domain.
@@ -47,12 +46,12 @@ class GenProg(object):
     # 
     #      * Stores the arithmetic operators only.
     #      
-    arithOpts: List[str]
+    arithmetic_operators: List[str]
 
     # 
     #      * Stores the relational operators only.
     #      
-    relOpts: List[str]
+    relational_operators: List[str]
 
     # 
     #      * Stores the terminals. Each character in the string "attributes" is stored as
@@ -65,47 +64,47 @@ class GenProg(object):
     #      * Stores the maximum depth of the trees created during initial population
     #      * generation.
     #      
-    maxDepth: int
+    max_depth: int
 
     # 
     #      * Stores the maximum depth of the offspring created by the genetic operators.
     #      
-    offspringDepth: int
+    offspring_depth: int
 
     # 
     #      * Stores the depth of the subtree created by the mutation operator.
     #      
-    mutationDepth: int
+    mutation_depth: int
 
     # 
     #      * Stores the population size.
     #      
-    populationSize: int
+    population_size: int
 
     # 
     #      * Stores the number generations.
     #      
-    noOfGenerations: int
+    no_of_generations: int
 
     # 
     #      * Stores the reproduction application rate.
     #      
-    reproductionRate: float
+    reproduction_rate: float
 
     # 
     #      * Stores the mutation application rate.
     #      
-    mutationRate: float
+    mutation_rate: float
 
     # 
     #      * Stores the crossover application rate.
     #      
-    crossoverRate: float
+    crossover_rate: float
 
     # 
     #      * Stores the tournament size.
     #      
-    tournamentSize: int
+    tournament_size: int
 
     # Stores the tournament size
     # 
@@ -121,7 +120,7 @@ class GenProg(object):
     # 
     #      * Stores an instance of the random number generator.
     #      
-    ranGen: Random
+    random_generator: Random
 
     # 
     #      * A temporary pointer used by the mutation operator.
@@ -148,7 +147,7 @@ class GenProg(object):
     #      * should be evolved. A value of 0 indicates and arithmetic function a value of
     #      * 1 indicates a rule.
     #      
-    heuType: int
+    heuristic_type: int
 
     # Is a flag used to determine whether output for each generation must be printed
     # to the screen or not. If it is set to true output is printed. If it is set to
@@ -166,14 +165,14 @@ class GenProg(object):
     #      * rule should be evolved. A value of 0 indicates and arithmetic function a value
     #      * of 1 indicates a rule.
     #      
-    def __init__(self, seed, attributes, heuType):
+    def __init__(self, seed, attributes, heuristic_type):
         self.seed = seed
-        self.ranGen = Random(seed)
+        self.random_generator = Random(seed)
         self.attributes = attributes
-        self.heuType = heuType
+        self.heuristic_type = heuristic_type
         self.print_ = True
-        self.setOpts()
-        self.setTerms()
+        self.set_operators()
+        self.set_terms()
 
     # Methods for setting parameter values for the genetic algorithm
     #
@@ -181,20 +180,20 @@ class GenProg(object):
     #      * @param parameterFile The name of the file the parameter values are stored
     #      * in.
     #      
-    def setParameters(self, parameterFile):
+    def set_parameters(self, parameter_file):
         try:
             # Initialise input stream to read from a file
-            with open(parameterFile, 'r') as f:
-                self.populationSize = int(f.readline())
-                self.tournamentSize = int(f.readline())
-                self.noOfGenerations = int(f.readline())
-                self.mutationRate = float(f.readline())
-                self.crossoverRate = float(f.readline())
-                self.maxDepth = int(f.readline())
-                self.offspringDepth = int(f.readline())
-                self.mutationDepth = int(f.readline())
+            with open(parameter_file, 'r') as f:
+                self.population_size = int(f.readline())
+                self.tournament_size = int(f.readline())
+                self.no_of_generations = int(f.readline())
+                self.mutation_rate = float(f.readline())
+                self.crossover_rate = float(f.readline())
+                self.max_depth = int(f.readline())
+                self.offspring_depth = int(f.readline())
+                self.mutation_depth = int(f.readline())
         except IOError as ioe:
-            print("The file " + parameterFile + " cannot be found. " + "Please check the details provided.", ioe)
+            print("The file " + parameter_file + " cannot be found. " + "Please check the details provided.", ioe)
 
     # 
     #      * This method sets the string of characters, each representing a low-level
@@ -202,15 +201,15 @@ class GenProg(object):
     #      * @param problem Is an instance of <tt>ProblemDomain</tt> which defines the
     #      * problem domain.
     #      
-    def setProblem(self, problem):
+    def set_problem(self, problem):
         self.problem = problem
 
     # 
     #      * Sets the number of generations size.
     #      * @param noOfGenerations Parameter value for the number of generations.
     #      
-    def setNoOfGenerations(self, noOfGenerations):
-        self.noOfGenerations = noOfGenerations
+    def set_no_of_generations(self, no_of_generations):
+        self.no_of_generations = no_of_generations
 
     # 
     #      * Sets the maximum permitted depth for the new subtree created by mutation
@@ -218,106 +217,106 @@ class GenProg(object):
     #      * @param mutationDepth Parameter value specifying the maximum depth of the
     #      * subtree created by mutation.
     #      
-    def setmutationDepth(self, mutationDepth):
-        self.mutationDepth = mutationDepth
+    def set_mutation_depth(self, mutation_depth):
+        self.mutation_depth = mutation_depth
 
     # 
     #      *
     #      * @return The population size.
     #      
-    def getPopulationSize(self):
-        return self.populationSize
+    def get_population_size(self):
+        return self.population_size
 
     # 
     #      * Sets the population size.
     #      * @param populationSize Parameter value for the population size.
     #      
-    def setPopulationSize(self, populationSize):
-        self.populationSize = populationSize
+    def set_population_size(self, population_size):
+        self.population_size = population_size
 
     # 
     #      *
     #      * @return The tournament size.
     #      
-    def getTournamentSize(self):
-        return self.tournamentSize
+    def get_tournament_size(self):
+        return self.tournament_size
 
     #
     #      * Sets the tournament size.
     #      * @param tournamentSize Parameter value for the tournament size.
     #      
-    def setTournamentSize(self, tournamentSize):
+    def set_tournament_size(self, tournament_size):
         #
         #          * Sets the tournament size.
         #          
-        self.tournamentSize = tournamentSize
+        self.tournament_size = tournament_size
 
     # 
     #      *
     #      * @return Returns the number of generations.
     #      
-    def getnoOfGenerations(self):
-        return self.noOfGenerations
+    def get_no_of_generations(self):
+        return self.no_of_generations
 
     # 
     #      *
     #      * @return Returns the mutation rate.
     #      
-    def getMutationRate(self):
-        return self.mutationRate
+    def get_mutation_rate(self):
+        return self.mutation_rate
 
     # 
     #      * Sets the mutation rate.
     #      * @param mutationRate Parameter value for the mutation rate. The value must be
     #      * a fraction, e.g. 0.5.
     #      
-    def setMutationRate(self, mutationRate):
-        self.mutationRate = mutationRate
+    def set_mutation_rate(self, mutation_rate):
+        self.mutation_rate = mutation_rate
 
     # 
     #      *
     #      * @return Returns the crossover rate.
     #      
-    def getCrossoverRate(self):
-        return self.crossoverRate
+    def get_crossover_rate(self):
+        return self.crossover_rate
 
     # 
     #      * Sets the crossover rate.
     #      * @param crossoverRate Parameter value for the crossover rate. The value must
     #      * be a fraction, e.g. 0.5.
     #      
-    def setCrossoverRate(self, crossoverRate):
-        self.crossoverRate = crossoverRate
+    def set_crossover_rate(self, crossover_rate):
+        self.crossover_rate = crossover_rate
 
     # 
     #      *
     #      * @return Returns the reproduction rate.
     #      
-    def getReproductionRate(self):
-        return self.reproductionRate
+    def get_reproduction_rate(self):
+        return self.reproduction_rate
 
     # 
     #      *
     #      * @return Returns the  maximum depth permitted for parse trees representing
     #      * heuristics created in the initial population.
     #      
-    def getMaxDepth(self):
-        return self.maxDepth
+    def get_max_depth(self):
+        return self.max_depth
 
     #
     #      * Sets the maximum depth of a parse tree in the initial population.
     #      * @param maxDepth Parameter value specifying the maximum depth
     #      * permitted for heuristics created in the initial population.
     #      
-    def setMaxDepth(self, maxDepth):
-        self.maxDepth = maxDepth
+    def set_max_depth(self, max_depth):
+        self.max_depth = max_depth
 
     #
     #      *
     #      * @return Returns the maximum offspring depth.
     #      
-    def getOffspringDepth(self):
-        return self.offspringDepth
+    def get_offspring_depth(self):
+        return self.offspring_depth
 
     #
     #      * Sets the maximum depth of the offspring produced by the genetic operators.If
@@ -326,22 +325,22 @@ class GenProg(object):
     #      * @param offspringDepth Parameter value specifying the maximum depth
     #      * permitted for offspring created by the mutation and crossover operators.
     #      
-    def setOffspringDepth(self, offspringDepth):
-        self.offspringDepth = offspringDepth
+    def set_offspring_depth(self, offspring_depth):
+        self.offspring_depth = offspring_depth
 
     #
     #      *
     #      * @return Returns the mutation depth.
     #      
-    def getMutationDepth(self):
-        return self.mutationDepth
+    def get_mutation_depth(self):
+        return self.mutation_depth
 
     #
     #      *
     #      * @return Returns the value of the flag print used to determine whether to
     #      * print output to the screen.
     #      
-    def getPrint(self):
+    def get_print(self):
         return self.print_
 
     #
@@ -353,376 +352,334 @@ class GenProg(object):
     #      * @param print A value of false or true indicating whether output for each
     #      * generation must be printed to the screen or not.
     #      
-    def setPrint(self, print_):
+    def set_print(self, print_):
         self.print_ = print_
 
-    def setOpts(self):
+    def set_operators(self):
         #
         #          * Sets the three function arrays opts, arithOpts and relOpts.
         #          
         # Store all the operators.
-        self.opts = ['+', '-', '*', '/']
-        if self.heuType == 1:
-            self.opts.append('if')
+        self.operators = ['+', '-', '*', '/']
+        if self.heuristic_type == 1:
+            self.operators.append('if')
         # Stores the arithmetic operators.
-        self.arithOpts = ['+', '-', '*', '/']
-        # Stores the relationaloperators.
+        self.arithmetic_operators = ['+', '-', '*', '/']
+        # Stores the relational operators.
 
-        self.relOpts = ['<', '>', '==', '!=', '<=', '>=']
+        self.relational_operators = ['<', '>', '==', '!=', '<=', '>=']
 
-    def setTerms(self):
+    def set_terms(self):
         #
         #          * Stores the terminals from the attributes string. Each character in
         #          * "attributes" is an element of the terminal set. 
         # Initialize array.
         # Store attributes as terminals.
-        count = 0
         self.terms = []
-        while count < len(self.attributes):
-            self.terms.append(self.attributes[count])
-            count += 1
-        # EndForCount
+        for i in range(len(self.attributes)):
+            self.terms.append(self.attributes[i])
 
-    def displayFunctionSet(self):
+    def display_function_set(self):
         # Displays the function set.
-        print(' '.join(self.opts))
+        print(' '.join(self.operators))
 
-    def displayTerminalSet(self):
+    def display_terminal_set(self):
         # Displays the function set.
         print(' '.join(self.terms))
 
-    def prune(self, root: Node, currDepth):
-        if currDepth == self.offspringDepth or (root.getLabel() == 'if' and currDepth == (self.offspringDepth - 1)):
+    def prune(self, root: Node, current_depth):
+        if current_depth == self.offspring_depth or (
+                root.getLabel() == 'if' and current_depth == (self.offspring_depth - 1)):
             if root.getArity() > 0:
-                root.setLabel(self.ranGen.choice(self.terms))
+                root.setLabel(self.random_generator.choice(self.terms))
                 root.setArity(0)
                 root.clearChildren()
         else:
-            currDepth += 1
-            i = 0
-            while i < root.getArity():
-                self.prune(root.getChild(i), currDepth)
-                i += 1
+            current_depth += 1
+            for i in range(root.getArity()):
+                self.prune(root.getChild(i), current_depth)
         # return root;
 
-    def printInd(self, root):
+    def print_labels(self, root):
         print(root.getLabel())
-        count = 0
-        while count < root.getArity():
-            # if(root.get_child(count)!=null)
-            self.printInd(root.getChild(count))
-            count += 1
-        # endfor_count
+        for i in range(root.getArity()):
+            self.print_labels(root.getChild(i))
 
-    def displayPop(self):
-        count = 0
-        while len(self.population):
-            self.population[count].getHeuristic().prefix()
-            print(self.population[count].getFitness())
-            count += 1
+    def display_population(self):
+        for solution in self.population:
+            solution.getHeuristic().prefix()
+            print(solution.getFitness())
 
-    def createPop(self):
-        self.population = [None] * self.populationSize
+    def create_population(self):
+        self.population = []
         best = None
-        count = 0
-        while count < self.populationSize:
-            prog = self.create()
-            self.population[count] = self.problem.evaluate(prog)
-            self.population[count].setHeuristic(prog)
-            if count == 0:
-                best = self.population[count]
-            elif self.population[count].fitter(best) == 1:
-                best = self.population[count]
-            count += 1
+        for i in range(self.population_size):
+            program = self.create()
+            new_solution = self.problem.evaluate(program)
+            self.population.append(new_solution)
+            new_solution.setHeuristic(program)
+            if i == 0:
+                best = new_solution
+            elif new_solution.fitter(best) == 1:
+                best = new_solution
         return best
 
-    def create(self):
+    def create(self) -> Node:
         root = Node()
 
-        root.setLabel(self.ranGen.choice(self.opts))
+        root.setLabel(self.random_generator.choice(self.operators))
         if root.getLabel() == "if":
             root.setArity(3)
         else:
             root.setArity(2)
-        return self.createInd(root, 1)
+        return self.create_node_with_children(root, 1)
 
-    def createInd(self, parent: Node, curDep: int):
-        curDep += 1
-        count = 0
-        while count < parent.getArity():
+    def create_node_with_children(self, parent: Node, current_depth: int) -> Node:
+        current_depth += 1
+        for i in range(parent.getArity()):
             child = Node()
-            if curDep == self.maxDepth:
-                child.setLabel(self.ranGen.choice(self.terms))
+            if current_depth == self.max_depth:
+                child.setLabel(self.random_generator.choice(self.terms))
                 child.setArity(0)
             else:
-                if parent.getLabel() == "if" and count == 0:
-                    child.setLabel(self.ranGen.choice(self.relOpts))
+                if parent.getLabel() == "if" and i == 0:
+                    child.setLabel(self.random_generator.choice(self.relational_operators))
                     child.setArity(2)
                 else:
-                    if self.ranGen.random() > 0.5:
-                        child.setLabel(self.ranGen.choice(self.terms))
+                    if self.random_generator.random() > 0.5:
+                        child.setLabel(self.random_generator.choice(self.terms))
                         child.setArity(0)
                     else:
-                        if (self.maxDepth - curDep) < 2:
-                            child.setLabel(self.ranGen.choice(self.arithOpts))
-                        else:
-                            child.setLabel(self.ranGen.choice(self.opts))
-                        if child.getLabel() == "if":
-                            child.setArity(3)
-                        else:
-                            child.setArity(2)
-            # print('    '*(curDep-2) + 'parent', parent.getLabel(), parent.getArity(), 'count', count, 'child', child.getLabel(), child.getArity())
-            parent.addChild(self.createInd(child, curDep))
-            count += 1
+                        self.set_node_label_and_arity(child, current_depth, self.max_depth)
+            parent.addChild(self.create_node_with_children(child, current_depth))
         return parent
 
-    def mutation(self, parent):
-        par = parent.getHeuristic()
-        mpoint = self.ranGen.randrange(self.getSize(par))
-        if mpoint == 0:
-            prog = self.create()
+    def mutation(self, parent: Solution) -> Solution:
+        parent_heuristic: Node = parent.getHeuristic()
+        mutation_point = self.random_generator.randrange(self.get_size_of_node(parent_heuristic))
+        if mutation_point == 0:
+            program = self.create()
         else:
-            prog = self.mprog(parent.getHeuristic(), mpoint)
-        if self.offspringDepth > 0:
-            self.prune(prog, 0)
-        offspring = self.problem.evaluate(prog)
-        offspring.setHeuristic(prog)
+            program = self.mutate_parent_at_point(parent_heuristic, mutation_point)
+        if self.offspring_depth > 0:
+            self.prune(program, 0)
+        offspring: Solution = self.problem.evaluate(program)
+        offspring.setHeuristic(program)
         return offspring
 
-    def mprog(self, parent, point):
-        new_prog = Node()
+    def mutate_parent_at_point(self, parent: Node, mutation_point: int) -> Node:
+        new_node: Node = Node()
         self.curPoint = 0
-        new_prog.setLabel(parent.getLabel())
-        new_prog.setArity(parent.getArity())
-        offspring = self.mutate(new_prog, parent, point)
+        new_node.setLabel(parent.getLabel())
+        new_node.setArity(parent.getArity())
+        offspring = self.mutate(new_node, parent, mutation_point)
         return offspring
 
-    def mutate(self, oprog, pprog, mpoint):
-        count = 0
-        while count < oprog.getArity():
+    def mutate(self, offspring_node: Node, parent_node: Node, mutation_point: int) -> Node:
+        for i in range(offspring_node.getArity()):
             self.curPoint += 1
-            if mpoint == self.curPoint:
-                if self.ranGen.random() > 0.5:
+            if mutation_point == self.curPoint:
+                if self.random_generator.random() > 0.5:
                     child = Node()
-                    child.setLabel(self.ranGen.choice(self.terms))
+                    child.setLabel(self.random_generator.choice(self.terms))
                     child.setArity(0)
                 else:
-                    if oprog.getLabel() is "if" and count == 0:
-                        child = self.mcreate(True)
+                    if offspring_node.getLabel() == "if" and i == 0:
+                        child = self.create_new_node_for_mutation(True)
                     else:
-                        child = self.mcreate(False)
-                oprog.addChild(child)
+                        child = self.create_new_node_for_mutation(False)
+                offspring_node.addChild(child)
             else:
                 child = Node()
-                child.setLabel(pprog.getChild(count).getLabel())
-                child.setArity(pprog.getChild(count).getArity())
-                oprog.addChild(self.mutate(child, pprog.getChild(count), mpoint))
-            count += 1
-        return oprog
+                child.setLabel(parent_node.getChild(i).getLabel())
+                child.setArity(parent_node.getChild(i).getArity())
+                offspring_node.addChild(self.mutate(child, parent_node.getChild(i), mutation_point))
+        return offspring_node
 
-    def mcreate(self, isif):
+    def create_new_node_for_mutation(self, is_if):
         root = Node()
-        if isif:
-            isif = False
-            root.setLabel(self.ranGen.choice(self.relOpts))
-        elif self.mutationDepth <= 2:
-            root.setLabel(self.ranGen.choice(self.arithOpts))
+        if is_if:
+            is_if = False
+            root.setLabel(self.random_generator.choice(self.relational_operators))
+        elif self.mutation_depth <= 2:
+            root.setLabel(self.random_generator.choice(self.arithmetic_operators))
         else:
-            root.setLabel(self.ranGen.choice(self.opts))
+            root.setLabel(self.random_generator.choice(self.operators))
         if root.getLabel() == "if":
             root.setArity(3)
         else:
             root.setArity(2)
-        return self.mcreateInd(root, 1, isif)
+        return self.create_new_node_for_mutation_recursive(root, 1, is_if)
 
-    def mcreateInd(self, parent, cur_dep, isif):
-        cur_dep += 1
-        count = 0
-        while count < parent.getArity():
+    def create_new_node_for_mutation_recursive(self, parent, current_depth, is_if):
+        current_depth += 1
+        for i in range(parent.getArity()):
             child = Node()
-            if cur_dep == self.mutationDepth:
-                child.setLabel(self.ranGen.choice(self.terms))
+            if current_depth == self.mutation_depth:
+                child.setLabel(self.random_generator.choice(self.terms))
                 child.setArity(0)
             else:
-                if isif or (parent.getLabel() == "if" and count == 0):
-                    child.setLabel(self.ranGen.choice(self.relOpts))
+                if is_if or (parent.getLabel() == "if" and i == 0):
+                    child.setLabel(self.random_generator.choice(self.relational_operators))
                     child.setArity(2)
-                    if isif:
-                        isif = False
+                    if is_if:
+                        is_if = False
                 else:
-                    if self.ranGen.random():
-                        child.setLabel(self.ranGen.choice(self.terms))
+                    if self.random_generator.random():
+                        child.setLabel(self.random_generator.choice(self.terms))
                         child.setArity(0)
                     else:
-                        if (self.mutationDepth - cur_dep) < 2:
-                            child.setLabel(self.ranGen.choice(self.arithOpts))
-                        else:
-                            child.setLabel(self.ranGen.choice(self.opts))
-                        if child.getLabel() == "if":
-                            child.setArity(3)
-                        else:
-                            child.setArity(2)
-            parent.addChild(self.mcreateInd(child, cur_dep, isif))
-            count += 1
+                        self.set_node_label_and_arity(child, current_depth, self.mutation_depth)
+            parent.addChild(self.create_new_node_for_mutation_recursive(child, current_depth, is_if))
         return parent
 
-    def getSize(self, root):
+    def set_node_label_and_arity(self, child, current_depth, depth):
+        if (depth - current_depth) < 2:
+            child.setLabel(self.random_generator.choice(self.arithmetic_operators))
+        else:
+            child.setLabel(self.random_generator.choice(self.operators))
+        if child.getLabel() == "if":
+            child.setArity(3)
+        else:
+            child.setArity(2)
+
+    def get_size_of_node(self, root):
         size = 1
-        count = 0
-        while count < root.getArity():
-            size += self.getSize(root.getChild(count))
-            count += 1
+        for i in range(root.getArity()):
+            size += self.get_size_of_node(root.getChild(i))
         return size
 
     def crossover(self, parent1, parent2):
-        p1 = parent1.getHeuristic()
-        p2 = parent2.getHeuristic()
-        c1 = self.getSize(p1)
-        c2 = self.getSize(p2)
-        cp1 = self.ranGen.randrange(c1)
-        cp2 = self.ranGen.randrange(c2)
-        o1 = Node()
-        o1.setLabel(p1.getLabel())
-        o1.setArity(p1.getArity())
-        if cp1 == 0:
-            sp1 = self.copy(p1, o1)
+        heuristic1: Node = parent1.getHeuristic()
+        heuristic2: Node = parent2.getHeuristic()
+        heuristic_length1 = self.get_size_of_node(heuristic1)
+        heuristic_length2 = self.get_size_of_node(heuristic2)
+        crossover_point1 = self.random_generator.randrange(heuristic_length1)
+        crossover_point2 = self.random_generator.randrange(heuristic_length2)
+        offspring1 = Node()
+        offspring1.setLabel(heuristic1.getLabel())
+        offspring1.setArity(heuristic1.getArity())
+        if crossover_point1 == 0:
+            sp1 = self.copy(heuristic1, offspring1)
         else:
             self.crPoint = 0
-            self.getChild(cp1, p1)
+            self.get_child(crossover_point1, heuristic1)
             sp1 = self.crChild
-        o2 = Node()
-        o2.setLabel(p2.getLabel())
-        o2.setArity(p2.getArity())
-        if cp2 == 0:
-            sp2 = self.copy(p2, o2)
+        offspring2 = Node()
+        offspring2.setLabel(heuristic2.getLabel())
+        offspring2.setArity(heuristic2.getArity())
+        if crossover_point2 == 0:
+            sp2 = self.copy(heuristic2, offspring2)
         else:
             self.crPoint = 0
-            self.getChild(cp2, p2)
+            self.get_child(crossover_point2, heuristic2)
             self.crPoint = 0
             sp2 = self.crChild
 
-        if cp1 == 0:
-            o1 = sp2
+        if crossover_point1 == 0:
+            offspring1 = sp2
         else:
             self.crPoint = 0
-            o1 = self.subprog(cp1, p1, o1, sp2)
+            offspring1 = self.add_sub_program(crossover_point1, heuristic1, offspring1, sp2)
 
-        if self.offspringDepth > 0:
-            self.prune(o1, 0)
+        if self.offspring_depth > 0:
+            self.prune(offspring1, 0)
 
-        if cp2 == 0:
-            o2 = sp1
+        if crossover_point2 == 0:
+            offspring2 = sp1
         else:
             self.crPoint = 0
-            o2 = self.subprog(cp2, p2, o2, sp1)
+            offspring2 = self.add_sub_program(crossover_point2, heuristic2, offspring2, sp1)
 
-        if self.offspringDepth > 0:
-            self.prune(o2, 0)
+        if self.offspring_depth > 0:
+            self.prune(offspring2, 0)
 
-        offspring: List[Solution] = [self.problem.evaluate(o1), self.problem.evaluate(o2)]
-        offspring[0].setHeuristic(o1)
-        offspring[1].setHeuristic(o2)
+        offspring = (self.problem.evaluate(offspring1), self.problem.evaluate(offspring2))
+        offspring[0].setHeuristic(offspring1)
+        offspring[1].setHeuristic(offspring2)
         return offspring
 
-    def copy(self, parent, cparent):
-        count = 0
-        while count < parent.getArity():
-            child = parent.getChild(count)
+    def copy(self, parent, crossover_parent):
+        for i in range(parent.getArity()):
+            child = parent.getChild(i)
             c = Node()
             c.setLabel(child.getLabel())
             c.setArity(child.getArity())
             c = self.copy(child, c)
-            cparent.addChild(c, count)
-            count += 1
-        return cparent
+            crossover_parent.addChild(c, i)
+        return crossover_parent
 
-    def getChild(self, cp, parent):
-        fin = False
-        count = 0
-        while not fin and count < parent.getArity():
+    def get_child(self, crossover_point, parent):
+        for i in range(parent.getArity()):
             self.crPoint += 1
-            child = parent.getChild(count)
-            if self.crPoint == cp:
+            child = parent.getChild(i)
+            if self.crPoint == crossover_point:
                 self.crChild = child
-                fin = True
+                break
             else:
-                self.getChild(cp, child)
-            count += 1
+                self.get_child(crossover_point, child)
 
-    def subprog(self, cp, parent, cparent, sp):
-        count = 0
-        while count < parent.getArity():
+    def add_sub_program(self, crossover_point: int, parent: Node, crossover_parent: Node, sub_program: Node) -> Node:
+        for i in range(parent.getArity()):
             self.crPoint += 1
-            child = parent.getChild(count)
-            if self.crPoint != cp:
-                c = Node()
-                c.setLabel(child.getLabel())
-                c.setArity(child.getArity())
-                c = self.subprog(cp, child, c, sp)
-                cparent.addChild(c, count)
+            child = parent.getChild(i)
+            if self.crPoint != crossover_point:
+                new_node = Node()
+                new_node.setLabel(child.getLabel())
+                new_node.setArity(child.getArity())
+                new_node = self.add_sub_program(crossover_point, child, new_node, sub_program)
+                crossover_parent.addChild(new_node, i)
             else:
-                cparent.addChild(sp, count)
-            count += 1
-        return cparent
+                crossover_parent.addChild(sub_program, i)
+        return crossover_parent
 
-    def selection(self):
-        best = self.ranGen.choice(self.population)
-        count = 2
-        while count <= self.tournamentSize:
-            current = self.ranGen.choice(self.population)
+    def selection(self) -> Solution:
+        best: Solution = self.random_generator.choice(self.population)
+        for i in range(self.tournament_size - 1):
+            current = self.random_generator.choice(self.population)
             if current.fitter(best) == 1:
                 best = current
-            count += 1
         return best
 
     def regenerate(self, best):
-        mtimes = int(math.floor(self.populationSize * self.mutationRate))
-        ctimes = int(math.floor(self.populationSize * self.crossoverRate)) / 2
-        if (mtimes + ctimes * 2) < self.populationSize:
-            mtimes += self.populationSize - (mtimes + ctimes * 2)
-        npop: List[Solution] = [None] * self.populationSize
-        index = 0
-        mc = 1
-        while mc <= mtimes:
-            npop[index] = self.mutation(self.selection())
-            if npop[index].fitter(best) == 1:
-                best = npop[index]
-            index += 1
-            mc += 1
-        cc = 1
-        while cc <= ctimes:
-            ctemp = self.crossover(self.selection(), self.selection())
-            npop[index] = ctemp[0]
-            index += 1
-            if ctemp[0].fitter(best) == 1:
-                best = ctemp[0]
-            npop[index] = ctemp[1]
-            index += 1
-            if ctemp[1].fitter(best) == 1:
-                best = ctemp[1]
-            cc += 1
-        self.population = npop
+        number_of_mutations = int(math.floor(self.population_size * self.mutation_rate))
+        number_of_crossovers = int(int(math.floor(self.population_size * self.crossover_rate)) / 2)
+        if (number_of_mutations + number_of_crossovers * 2) < self.population_size:
+            number_of_mutations += self.population_size - (number_of_mutations + number_of_crossovers * 2)
+        new_population: List[Solution] = []
+        for i in range(number_of_mutations):
+            new_solution = self.mutation(self.selection())
+            new_population.append(new_solution)
+            if new_solution.fitter(best) == 1:
+                best = new_solution
+        for i in range(number_of_crossovers):
+            new_solution1, new_solution2 = self.crossover(self.selection(), self.selection())
+            new_population.append(new_solution1)
+            if new_solution1.fitter(best) == 1:
+                best = new_solution1
+            new_population.append(new_solution2)
+            if new_solution2.fitter(best) == 1:
+                best = new_solution2
+        self.population = new_population
         return best
 
     def evolve(self):
         if self.print_:
             print("Generation 0")
-        best = self.createPop()
+        best: Solution = self.create_population()
         if self.print_:
-            self.printInd(best.getHeuristic())
+            self.print_labels(best.getHeuristic())
             print("", best.getFitness())
             print()
-        count = 1
-        while count <= self.noOfGenerations:
+        for i in range(self.no_of_generations):
             if self.print_:
-                print("Generation", count)
-            prog = self.regenerate(best)
-            if prog.fitter(best) == 1:
-                best = prog
+                print("Generation", i + 1)
+            new_program = self.regenerate(best)
+            if new_program.fitter(best) == 1:
+                best = new_program
             if self.print_:
-                self.printInd(best.getHeuristic())
+                self.print_labels(best.getHeuristic())
                 print("", best.getFitness())
                 print()
-            count += 1
         print("Completed evolving heuristic")
         return best
