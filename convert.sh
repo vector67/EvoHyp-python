@@ -1,5 +1,5 @@
 #!/bin/bash
-#folders=('DistrGenAlg' 'DistrGenProg' 'GenAlg' 'GenProg')
+#folders=('DistributedGeneticAlgorithm' 'DistributedGeneticProgram' 'GeneticAlgorithm' 'GeneticProgram')
 folders=('examples/DistributedGeneticProgram')
 for folder in "${folders[@]}"; do
   for filename in ./"$folder"/*.java; do

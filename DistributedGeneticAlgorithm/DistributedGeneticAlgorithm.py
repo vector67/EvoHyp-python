@@ -15,12 +15,12 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from DistrGenAlg.GenAlgProcess import GenAlgProcessCreate, GenAlgProcessRegen, GenAlgProcess
-from GenAlg.GenAlg import GenAlg
+from DistributedGeneticAlgorithm.GenAlgProcess import GenAlgProcessCreate, GenAlgProcessRegen, GenAlgProcess
+from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
 from InitialSolution import InitialSolution
 
 
-class DistrGenAlg(GenAlg):
+class DistributedGeneticAlgorithm(GeneticAlgorithm):
     #
     #      * Stores the number of cores.
     #      
@@ -62,7 +62,7 @@ class DistrGenAlg(GenAlg):
         self.noOfCores = noOfCores
 
     def create_gen_alg(self):
-        gen_alg = GenAlg(heuristics=self.heuristics, ran_gen=self.ranGen)
+        gen_alg = GeneticAlgorithm(heuristics=self.heuristics, ran_gen=self.ranGen)
         gen_alg.set_population_size(int(self.population_size / self.noOfCores))
         gen_alg.set_initial_max_length(self.initial_max_length)
         gen_alg.set_problem(self.problem)

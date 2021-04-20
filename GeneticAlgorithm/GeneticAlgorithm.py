@@ -17,7 +17,7 @@ from InitialSolution import InitialSolution
 from ProblemDomain import ProblemDomain
 
 
-class GenAlg(object):
+class GeneticAlgorithm(object):
     # Data elements
     # 
     # Stores the population size.

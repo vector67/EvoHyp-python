@@ -11,9 +11,9 @@
 from random import Random
 from typing import List
 
-from GenProg.Evaluator import Evaluator
-from GenProg.Node import Node
-from GenProg.Solution import Solution
+from GeneticProgram.Evaluator import Evaluator
+from GeneticProgram.Node import Node
+from GeneticProgram.Solution import Solution
 import sys
 
 from examples.DistributedGeneticProgram.Entity import Entity

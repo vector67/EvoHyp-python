@@ -1,6 +1,6 @@
 #
 #  * This class contains the driver program for the class illustrate the use of
-#  * the GenProg library. 
+#  * the GeneticProgram library.
 #  * 
 #  * Nelishia Pillay
 #  * 
@@ -9,7 +9,7 @@
 # package: createheuristic
 import time
 
-from GenProg.GenProg import GenProg
+from GeneticProgram.GeneticProgram import GeneticProgram
 from examples.GeneticProgram.ComOptProb import ComOptProb
 
 
@@ -17,12 +17,12 @@ class CreateHeuristic(object):
     @classmethod
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
-        # the GenAlg library can be used to solve a combinatorial optimization problem.
+        # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
         problem = ComOptProb()
         seed = round(time.time() * 1000)
         attribs = str("abc")
         problem.setAttribs(attribs)
-        gchh = GenProg(seed, attribs, 1)
+        gchh = GeneticProgram(seed, attribs, 1)
         gchh.set_parameters("Parameters.txt")
         gchh.set_problem(problem)
         sol = gchh.evolve()

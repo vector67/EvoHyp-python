@@ -1,6 +1,6 @@
 #
 #  * This class is used to represent an entity which is allocated at each point in
-#  * creating a solution. The class is used to illustrate the use of the GenProg
+#  * creating a solution. The class is used to illustrate the use of the GeneticProgram
 #  * library.
 #  *
 #  * Nelishia Pillay

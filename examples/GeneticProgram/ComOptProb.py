@@ -12,7 +12,7 @@
 #  
 # package: createheuristic
 
-from GenProg.Problem import Problem
+from GeneticProgram.Problem import Problem
 from examples.GeneticProgram.ComOptSoln import ComOptSoln
 
 

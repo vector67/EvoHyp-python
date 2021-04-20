@@ -16,12 +16,12 @@ import math
 from random import Random
 from typing import List
 
-from GenProg.Node import Node
-from GenProg.Problem import Problem
-from GenProg.Solution import Solution
+from GeneticProgram.Node import Node
+from GeneticProgram.Problem import Problem
+from GeneticProgram.Solution import Solution
 
 
-class GenProg(object):
+class GeneticProgram(object):
     # Data elements
     # 
     #      *Stores a string of characters with each character representing a problem
@@ -174,8 +174,8 @@ class GenProg(object):
         self.set_operators()
         self.set_terms()
 
-    def clone(self) -> 'GenProg':
-        gen_program = GenProg(self.seed, self.attributes, self.heuristic_type)
+    def clone(self) -> 'GeneticProgram':
+        gen_program = GeneticProgram(self.seed, self.attributes, self.heuristic_type)
         gen_program.population_size = self.population_size
         gen_program.tournament_size = self.tournament_size
         gen_program.no_of_generations = self.no_of_generations

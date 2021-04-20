@@ -1,4 +1,4 @@
-from GenProg.Solution import Solution
+from GeneticProgram.Solution import Solution
 
 
 class Problem:

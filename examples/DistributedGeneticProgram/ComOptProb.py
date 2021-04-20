@@ -11,7 +11,7 @@
 #  *
 #
 
-from GenProg.Problem import Problem
+from GeneticProgram.Problem import Problem
 from examples.DistributedGeneticProgram.ComOptSoln import ComOptSoln
 
 

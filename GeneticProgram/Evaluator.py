@@ -13,7 +13,7 @@
 #
 from typing import List
 
-from GenProg.Node import Node
+from GeneticProgram.Node import Node
 
 
 class Evaluator(object):

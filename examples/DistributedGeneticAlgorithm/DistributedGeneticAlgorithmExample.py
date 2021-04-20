@@ -9,7 +9,7 @@
 #
 import time
 
-from DistrGenAlg.DistrGenAlg import DistrGenAlg
+from DistributedGeneticAlgorithm.DistributedGeneticAlgorithm import DistributedGeneticAlgorithm
 from examples.DistributedGeneticAlgorithm.ComOptProb import ComOptProb
 
 
@@ -17,12 +17,12 @@ class SolveProblem(object):
     @classmethod
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
-        # the GenAlg library can be used to solve a combinatorial optimization problem.
+        # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
         problem = ComOptProb()
         seed = round(time.time() * 1000)
         heuristics = str("abc")
-        schh = DistrGenAlg(seed, heuristics, 4)
-        schh.set_parameters("../../DistrGenAlg/Parameters.txt")
+        schh = DistributedGeneticAlgorithm(seed, heuristics, 4)
+        schh.set_parameters("../../DistributedGeneticAlgorithm/Parameters.txt")
         schh.set_problem(problem)
         solution = schh.evolve()
         print("Best Solution")

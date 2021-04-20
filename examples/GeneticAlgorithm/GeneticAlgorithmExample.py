@@ -12,7 +12,7 @@
 # Import statements
 import time
 
-from GenAlg.GenAlg import GenAlg
+from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
 from examples.GeneticAlgorithm.ComOptProb import ComOptProb
 
 
@@ -20,12 +20,12 @@ class GeneticAlgorithmExample(object):
     @classmethod
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
-        # the GenAlg library can be used to solve a combinatorial optimization problem.
+        # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
         problem = ComOptProb()
         seed = round(time.time() * 1000)
         heuristics = "abc"
-        schh = GenAlg(seed, heuristics)
-        schh.set_parameters("../../GenAlg/Parameters.txt")
+        schh = GeneticAlgorithm(seed, heuristics)
+        schh.set_parameters("../../GeneticAlgorithm/Parameters.txt")
         schh.set_problem(problem)
         solution = schh.evolve()
         print("Best Solution")

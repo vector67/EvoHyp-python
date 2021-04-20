@@ -19,13 +19,13 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from DistrGenProg.GenProgramProcess import GenProgramProcess, GenProgramProcessCreate, \
+from DistributedGeneticProgram.GenProgramProcess import GenProgramProcess, GenProgramProcessCreate, \
     GenProgramProcessRegenerate
-from GenProg.GenProg import GenProg
-from GenProg.Solution import Solution
+from GeneticProgram.GeneticProgram import GeneticProgram
+from GeneticProgram.Solution import Solution
 
 
-class DistrGenProg(GenProg):
+class DistributedGeneticProgram(GeneticProgram):
     # 
     #      * Stores the number of cores.
     #      
