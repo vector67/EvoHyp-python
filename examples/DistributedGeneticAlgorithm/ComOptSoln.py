@@ -5,25 +5,24 @@
 #  * Nelishia Pillay
 #  *
 #  * 30 August 2016
-#  
-# package: solveproblem
-# Import statements
+#
 from typing import List
+
 from InitialSolution import InitialSolution
 
 
 class ComOptSoln(InitialSolution):
     # Data elements
     # Stores the heuristic combination that will be used to create an initial
-    # solution.    
+    # solution.
     heuristic_combination: str = ''
 
     # Stores the fitness value to be used for the initial solution created.
     fitness: float
 
     # Stores the initial solution created using the heuristic. In this problem
-    # this is stored as an array of strings just as an example. However, the 
-    # solution can be of any type, e.g. for the travelling salesman problem it 
+    # this is stored as an array of strings just as an example. However, the
+    # solution can be of any type, e.g. for the travelling salesman problem it
     # could be a string representing the tour.
     initial_solution: List[str] = []
 
@@ -51,7 +50,7 @@ class ComOptSoln(InitialSolution):
 
     def fitter(self, other: InitialSolution):
         # This method is used to compare two intial solutions to determine which of
-        # the two is fitter. 
+        # the two is fitter.
         if other.get_fitness() < self.fitness:
             return 1
         elif other.get_fitness() > self.fitness:
@@ -68,4 +67,3 @@ class ComOptSoln(InitialSolution):
         # Calculate the fitness of the constructed solution. This is just an example
         # so simply adds the length of the solution to a random double.
         self.fitness = len(temp)
-

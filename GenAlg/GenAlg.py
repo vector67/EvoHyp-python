@@ -113,11 +113,14 @@ class GenAlg(object):
     # @param heuristics A string of characters representing each of the low-level
     #                   heuristics for the problem domain.
     #      
-    def __init__(self, seed, heuristics):
+    def __init__(self, seed=123, heuristics='', ran_gen=None):
         self.heuristics = heuristics
         print("Seed", seed)
         # Initializes the random number generator.
-        self.ranGen = Random(seed)
+        if seed == 123 and ran_gen is not None:
+            self.ranGen = ran_gen
+        else:
+            self.ranGen = Random(seed)
         # Set the flag for printing output for each generation to true.
         self.print_ = True
         self.population_size = 0
@@ -429,7 +432,6 @@ class GenAlg(object):
         print('com', com)
         mutation_point = self.ranGen.randrange(len(com))
         mutation_length = self.ranGen.randrange(self.mutation_length) + 1
-        tem: str
         hh = self.create_string(mutation_length)
         begin = com[: mutation_point]
         end = com[mutation_point + 1:]
@@ -450,10 +452,10 @@ class GenAlg(object):
         if not number_of_mutations + number_of_crossovers + number_of_reproductions == len(self.population):
             if not number_of_crossovers == 0:
                 number_of_crossovers += len(self.population) - (
-                            number_of_mutations + number_of_crossovers + number_of_reproductions)
+                        number_of_mutations + number_of_crossovers + number_of_reproductions)
             elif not number_of_mutations == 0:
                 number_of_mutations += len(self.population) - (
-                            number_of_mutations + number_of_crossovers + number_of_reproductions)
+                        number_of_mutations + number_of_crossovers + number_of_reproductions)
         best = best_individual
         index = 0
         new_population: List[InitialSolution] = []
