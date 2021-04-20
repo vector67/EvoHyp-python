@@ -1,12 +1,10 @@
 import multiprocessing as mp
 from multiprocessing import Queue
-from typing import List
 
 from GenAlg.GenAlg import GenAlg
-from InitialSolution import InitialSolution
 
 
-class MultiProcessGenAlg(mp.Process):
+class GenAlgProcess(mp.Process):
     def __init__(self, gen_alg: GenAlg, population_queue: Queue, best_queue: Queue):
         super().__init__()
         self.gen_alg = gen_alg
@@ -16,7 +14,7 @@ class MultiProcessGenAlg(mp.Process):
         self.best_queue = best_queue
 
 
-class MultiProcessGenAlgCreate(MultiProcessGenAlg):
+class GenAlgProcessCreate(GenAlgProcess):
     def __init__(self, gen_alg: GenAlg, population_queue: Queue, best_queue: Queue):
         super().__init__(gen_alg, population_queue, best_queue)
 
@@ -26,7 +24,7 @@ class MultiProcessGenAlgCreate(MultiProcessGenAlg):
         self.population_queue.put(self.gen_alg.population)
 
 
-class MultiProcessGenAlgRegen(MultiProcessGenAlg):
+class GenAlgProcessRegen(GenAlgProcess):
     def __init__(self, gen_alg: GenAlg, population_queue: Queue, best_queue: Queue, best):
         super().__init__(gen_alg, population_queue, best_queue)
         self.best = best

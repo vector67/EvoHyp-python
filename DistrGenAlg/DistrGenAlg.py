@@ -13,10 +13,9 @@
 #
 import multiprocessing
 import queue
-from random import Random
 from typing import List, Any
 
-from DistrGenAlg.MultiProcessGenAlg import MultiProcessGenAlgCreate, MultiProcessGenAlgRegen, MultiProcessGenAlg
+from DistrGenAlg.GenAlgProcess import GenAlgProcessCreate, GenAlgProcessRegen, GenAlgProcess
 from GenAlg.GenAlg import GenAlg
 from InitialSolution import InitialSolution
 
@@ -27,7 +26,7 @@ class DistrGenAlg(GenAlg):
     #      
     noOfCores: int
 
-    processes: List[MultiProcessGenAlg]
+    processes: List[GenAlgProcess]
 
     population_queue: queue.Queue[Any]
     best_queue: queue.Queue[Any]
@@ -81,7 +80,7 @@ class DistrGenAlg(GenAlg):
 
         while count < self.noOfCores:
             gen_alg = self.create_gen_alg()
-            process = MultiProcessGenAlgCreate(gen_alg, self.population_queue, self.best_queue)
+            process = GenAlgProcessCreate(gen_alg, self.population_queue, self.best_queue)
             process.start()
             self.processes.append(process)
             count += 1
@@ -110,7 +109,8 @@ class DistrGenAlg(GenAlg):
         core_population_size = int(self.population_size / self.noOfCores)
         for i in range(len(self.processes)):
             gen_alg = self.create_gen_alg()
-            self.processes[i] = MultiProcessGenAlgRegen(gen_alg, self.population_queue, self.best_queue, self.population[i*core_population_size])
+            self.processes[i] = GenAlgProcessRegen(gen_alg, self.population_queue, self.best_queue,
+                                                   self.population[i * core_population_size])
             self.population_queue.put(self.population[i * core_population_size: (i + 1) * core_population_size])
 
         for process in self.processes:

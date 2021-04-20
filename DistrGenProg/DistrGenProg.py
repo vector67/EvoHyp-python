@@ -19,8 +19,8 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from DistrGenProg.MultiProcessGenProgram import MultiProcessGenProgram, MultiProcessGenProgramCreate, \
-    MultiProcessGenProgramRegenerate
+from DistrGenProg.GenProgramProcess import GenProgramProcess, GenProgramProcessCreate, \
+    GenProgramProcessRegenerate
 from GenProg.GenProg import GenProg
 from GenProg.Solution import Solution
 
@@ -31,7 +31,7 @@ class DistrGenProg(GenProg):
     #      
     no_of_cores = int()
 
-    processes: List[MultiProcessGenProgram]
+    processes: List[GenProgramProcess]
 
     population_queue: queue.Queue[Any]
     best_queue: queue.Queue[Any]
@@ -71,7 +71,7 @@ class DistrGenProg(GenProg):
         for i in range(self.no_of_cores):
             gen_program = self.clone()
             gen_program.set_population_size(core_population_size)
-            process = MultiProcessGenProgramCreate(gen_program, self.population_queue, self.best_queue)
+            process = GenProgramProcessCreate(gen_program, self.population_queue, self.best_queue)
             process.start()
             self.processes.append(process)
         best: Solution = None
@@ -91,10 +91,10 @@ class DistrGenProg(GenProg):
         for i in range(len(self.processes)):
             gen_program = self.clone()
             gen_program.set_population_size(core_population_size)
-            self.processes[i] = MultiProcessGenProgramRegenerate(gen_program,
-                                                                 self.population_queue,
-                                                                 self.best_queue,
-                                                                 self.population[i * core_population_size])
+            self.processes[i] = GenProgramProcessRegenerate(gen_program,
+                                                            self.population_queue,
+                                                            self.best_queue,
+                                                            self.population[i * core_population_size])
             self.population_queue.put(self.population[i * core_population_size: (i + 1) * core_population_size])
 
         for process in self.processes:
