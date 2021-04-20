@@ -23,7 +23,7 @@ class DistributedGeneticAlgorithmExample(object):
         seed = round(time.time() * 1000)
         heuristics = str("abc")
         distributed_genetic_algorithm = DistributedGeneticAlgorithm(seed, heuristics, 4)
-        distributed_genetic_algorithm.set_parameters("../../Distributed/Parameters.txt")
+        distributed_genetic_algorithm.set_parameters("Parameters.txt")
         distributed_genetic_algorithm.set_problem(problem)
         solution = distributed_genetic_algorithm.evolve()
         print("Best Solution")

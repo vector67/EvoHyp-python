@@ -62,25 +62,25 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     def set_no_of_cores(self, no_of_cores):
         self.no_of_cores = no_of_cores
 
-    def create_gen_alg(self):
-        gen_alg = GeneticAlgorithm(heuristics=self.heuristics, ran_gen=self.ranGen)
-        gen_alg.set_population_size(int(self.population_size / self.no_of_cores))
-        gen_alg.set_initial_max_length(self.initial_max_length)
-        gen_alg.set_problem(self.problem)
-        gen_alg.tournament_size = self.tournament_size
-        gen_alg.no_of_generations = self.no_of_generations
-        gen_alg.mutation_rate = self.mutation_rate
-        gen_alg.crossover_rate = self.crossover_rate
-        gen_alg.offspring_max_length = self.offspring_max_length
-        gen_alg.mutation_length = self.mutation_length
-        return gen_alg
+    def create_genetic_algorithm(self):
+        genetic_algorithm = GeneticAlgorithm(heuristics=self.heuristics, ran_gen=self.ranGen)
+        genetic_algorithm.set_population_size(int(self.population_size / self.no_of_cores))
+        genetic_algorithm.set_initial_max_length(self.initial_max_length)
+        genetic_algorithm.set_problem(self.problem)
+        genetic_algorithm.tournament_size = self.tournament_size
+        genetic_algorithm.no_of_generations = self.no_of_generations
+        genetic_algorithm.mutation_rate = self.mutation_rate
+        genetic_algorithm.crossover_rate = self.crossover_rate
+        genetic_algorithm.offspring_max_length = self.offspring_max_length
+        genetic_algorithm.mutation_length = self.mutation_length
+        return genetic_algorithm
 
     def create_population(self) -> Solution:
         self.population = []
         count = 0
 
         while count < self.no_of_cores:
-            gen_alg = self.create_gen_alg()
+            gen_alg = self.create_genetic_algorithm()
             process = GeneticAlgorithmProcessCreate(gen_alg, self.population_queue, self.best_queue)
             process.start()
             self.processes.append(process)
@@ -103,7 +103,7 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     def regenerate(self, best_individual: Solution):
         core_population_size = int(self.population_size / self.no_of_cores)
         for i in range(len(self.processes)):
-            gen_alg = self.create_gen_alg()
+            gen_alg = self.create_genetic_algorithm()
             self.processes[i] = GeneticAlgorithmProcessRegenerate(gen_alg, self.population_queue, self.best_queue,
                                                                   self.population[i * core_population_size])
             self.population_queue.put(self.population[i * core_population_size: (i + 1) * core_population_size])
@@ -121,23 +121,3 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
                 best = possible_best
             self.population.extend(self.population_queue.get())
         return best
-    #
-    # def evolve(self):
-    #     """ generated source for method evolve """
-    #     if self.print_:
-    #         print("Generation 0")
-    #     best = self.createPop()
-    #     if self.print_:
-    #         print(best.get_fitness(), best.get_heuristic_combination())
-    #     count = 1
-    #     while count <= self.no_of_generations:
-    #         if self.print_:
-    #             print("Generation", count)
-    #         ind = self.regen(best)
-    #         if ind.fitter(best) == 1:
-    #             best = ind
-    #         if self.print_:
-    #             print(best.getFitness() + " " + best.getHeuCom())
-    #         count += 1
-    #     print("Completed evolving heuristic combination.")
-    #     return best

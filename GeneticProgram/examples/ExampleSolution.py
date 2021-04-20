@@ -105,6 +105,7 @@ class ExampleSolution(Solution):
         #     
         # Initialize random number generator.  
         random_generator = Random()
+        self.entities = []
         # Loop to create entities.
         for i in range(3):
             attribs = [random_generator.randrange(10) + 1 for _ in range(3)]
