@@ -1,6 +1,6 @@
 #!/bin/bash
 #folders=('DistrGenAlg' 'DistrGenProg' 'GenAlg' 'GenProg')
-folders=('examples/DistributedGeneticAlgorithm')
+folders=('examples/DistributedGeneticProgram')
 for folder in "${folders[@]}"; do
   for filename in ./"$folder"/*.java; do
     file=${filename%.java}
