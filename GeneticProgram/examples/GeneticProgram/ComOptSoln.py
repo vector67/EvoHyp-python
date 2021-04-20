@@ -14,7 +14,7 @@ from typing import List
 from GeneticProgram.Evaluator import Evaluator
 from GeneticProgram.Node import Node
 from GeneticProgram.Solution import Solution
-from examples.GeneticProgram.Entity import Entity
+from GeneticProgram.examples.GeneticProgram.Entity import Entity
 import sys
 
 

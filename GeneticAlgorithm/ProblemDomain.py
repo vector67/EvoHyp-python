@@ -1,4 +1,4 @@
-from InitialSolution import InitialSolution
+from GeneticAlgorithm.InitialSolution import InitialSolution
 
 
 class ProblemDomain:

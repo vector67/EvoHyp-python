@@ -16,7 +16,7 @@ from GeneticProgram.Node import Node
 from GeneticProgram.Solution import Solution
 import sys
 
-from examples.DistributedGeneticProgram.Entity import Entity
+from GeneticProgram.examples.DistributedGeneticProgram.Entity import Entity
 
 
 class ComOptSoln(Solution):

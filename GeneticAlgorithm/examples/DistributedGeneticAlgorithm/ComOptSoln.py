@@ -8,7 +8,7 @@
 #
 from typing import List
 
-from InitialSolution import InitialSolution
+from GeneticAlgorithm.InitialSolution import InitialSolution
 
 
 class ComOptSoln(InitialSolution):

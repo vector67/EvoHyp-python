@@ -13,8 +13,8 @@ from typing import List
 # hyper-heuristic for selecting low-level constructive or perturbative
 # heuristics for a problem domain.
 #
-from InitialSolution import InitialSolution
-from ProblemDomain import ProblemDomain
+from GeneticAlgorithm.InitialSolution import InitialSolution
+from GeneticAlgorithm.ProblemDomain import ProblemDomain
 
 
 class GeneticAlgorithm(object):

@@ -15,9 +15,9 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from DistributedGeneticAlgorithm.GenAlgProcess import GenAlgProcessCreate, GenAlgProcessRegen, GenAlgProcess
+from GeneticAlgorithm.Distributed.GenAlgProcess import GenAlgProcessCreate, GenAlgProcessRegen, GenAlgProcess
 from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
-from InitialSolution import InitialSolution
+from GeneticAlgorithm.InitialSolution import InitialSolution
 
 
 class DistributedGeneticAlgorithm(GeneticAlgorithm):

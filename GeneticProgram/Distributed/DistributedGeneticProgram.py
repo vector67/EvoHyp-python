@@ -19,7 +19,7 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from DistributedGeneticProgram.GenProgramProcess import GenProgramProcess, GenProgramProcessCreate, \
+from GeneticProgram.Distributed.GenProgramProcess import GenProgramProcess, GenProgramProcessCreate, \
     GenProgramProcessRegenerate
 from GeneticProgram.GeneticProgram import GeneticProgram
 from GeneticProgram.Solution import Solution

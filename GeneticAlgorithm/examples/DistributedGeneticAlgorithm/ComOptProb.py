@@ -8,7 +8,7 @@
 #  
 # package: solveproblem
 
-from ProblemDomain import ProblemDomain
+from GeneticAlgorithm.ProblemDomain import ProblemDomain
 from ComOptSoln import ComOptSoln
 
 

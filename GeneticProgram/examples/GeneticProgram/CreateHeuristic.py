@@ -5,15 +5,15 @@
 #  * Nelishia Pillay
 #  * 
 #  * 8 October 2016
-#
+#  
+# package: createheuristic
 import time
 
-from DistributedGeneticProgram.DistributedGeneticProgram import DistributedGeneticProgram
-from GeneticProgram.Solution import Solution
-from examples.DistributedGeneticProgram.ComOptProb import ComOptProb
+from GeneticProgram.GeneticProgram import GeneticProgram
+from GeneticProgram.examples.GeneticProgram.ComOptProb import ComOptProb
 
 
-class DistributedGeneticProgramExample(object):
+class CreateHeuristic(object):
     @classmethod
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
@@ -22,22 +22,29 @@ class DistributedGeneticProgramExample(object):
         seed = round(time.time() * 1000)
         attribs = str("abc")
         problem.setAttribs(attribs)
-        gchh = DistributedGeneticProgram(seed, attribs, 1, 4)
+        gchh = GeneticProgram(seed, attribs, 1)
         gchh.set_parameters("Parameters.txt")
         gchh.set_problem(problem)
-        solution = gchh.evolve()
+        sol = gchh.evolve()
         print("Best Solution")
         print("--------------")
-        print("Fitness:", solution.getFitness())
+        print("Fitness:", sol.getFitness())
         print("Heuristic: ")
-        print((solution.getHeuristic()).__str__())
+        print((sol.getHeuristic()).__str__())
         print("Solution: ")
-        DistributedGeneticProgramExample.displaySolution(solution)
+        cls.displaySolution(sol.getSoln())
 
     @classmethod
-    def displaySolution(cls, soln: Solution):
+    def displaySolution(cls, soln):
         # Displays the solution.
-        print(' '.join([' '.join(list(map(str, [attribs.getAttribs()[i] for i in range(3)]))) for attribs in soln.getSoln()]))
+        count = 0
+        while count < len(soln):
+            attribs = soln[count].getAttribs()
+            print(attribs[0], attribs[1], attribs[2])
+            print()
+            count += 1
+        # EndforCount
+        print()
 
     @classmethod
     def main(cls, args):
@@ -47,4 +54,4 @@ class DistributedGeneticProgramExample(object):
 if __name__ == '__main__':
     import sys
 
-    DistributedGeneticProgramExample.main(sys.argv)
+    CreateHeuristic.main(sys.argv)
