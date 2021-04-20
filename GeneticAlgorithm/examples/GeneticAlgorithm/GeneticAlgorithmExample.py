@@ -8,8 +8,7 @@
 #  *
 #  * 30 August 2016
 #
-# package: solveproblem
-# Import statements
+
 import time
 
 from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
@@ -24,10 +23,10 @@ class GeneticAlgorithmExample(object):
         problem = ExampleProblem()
         seed = round(time.time() * 1000)
         heuristics = "abc"
-        schh = GeneticAlgorithm(seed, heuristics)
-        schh.set_parameters("Parameters.txt")
-        schh.set_problem(problem)
-        solution = schh.evolve()
+        genetic_algorithm = GeneticAlgorithm(seed, heuristics)
+        genetic_algorithm.set_parameters("Parameters.txt")
+        genetic_algorithm.set_problem(problem)
+        solution = genetic_algorithm.evolve()
         print("Best Solution")
         print("--------------")
         print("Fitness:", solution.get_fitness())
@@ -41,11 +40,9 @@ class GeneticAlgorithmExample(object):
         print(' '.join(solution))
 
     @classmethod
-    def main(cls, args):
+    def main(cls):
         cls.solve()
 
 
 if __name__ == '__main__':
-    import sys
-
-    GeneticAlgorithmExample.main(sys.argv)
+    GeneticAlgorithmExample.main()

@@ -6,7 +6,6 @@
 #  * 
 #  * 8 October 2016
 #  
-# package: createheuristic
 
 from random import Random
 from typing import List
@@ -42,7 +41,7 @@ class ExampleSolution(Solution):
     #   * solution can be of any type, e.g. for the traveling salesman problem it 
     #   * could be a string representing the tour.
     #   
-    soln: List[Entity]
+    solution: List[Entity]
 
     # It may be necessary to store other values that are specific to problem being
     # solved that is different from the fitness or needed to calculate the fitness.
@@ -54,26 +53,25 @@ class ExampleSolution(Solution):
     #   
     attributes: str
 
-    # ABSTRACT METHODS
-    def setHeuristic(self, heuristic):
+    def set_heuristic(self, heuristic):
         #
         #     * Sets the evolved heuristic.
         #     
         self.heuristic = heuristic
 
-    def getHeuristic(self):
+    def get_heuristic(self):
         #
         #     * Returns the evolved heuristic.
         #     
         return self.heuristic
 
-    def getSoln(self):
+    def get_solution(self) -> List[Entity]:
         #
         #     * Returns the solution created using the evolved heuristic.
         #     
-        return self.soln
+        return self.solution
 
-    def getFitness(self):
+    def get_fitness(self):
         #
         #     * Returns the fitness calculated using the solution constructed using the
         #     * evolved heuristic.
@@ -85,9 +83,9 @@ class ExampleSolution(Solution):
         #     * This method is used to compare two solutions to determine which of 
         #     * the two is fitter. 
         #     
-        if other.getFitness() < self.fitness:
+        if other.get_fitness() < self.fitness:
             return -1
-        elif other.getFitness() > self.fitness:
+        elif other.get_fitness() > self.fitness:
             return 1
         else:
             return 0
@@ -95,56 +93,51 @@ class ExampleSolution(Solution):
     # OTHER METHODS
     def __init__(self):
         super(ExampleSolution, self).__init__()
-        self.soln = None
+        self.solution = []
         # Initialize the problem domain  
-        self.initEntities()
+        self.initialize_entities()
 
-    def initEntities(self):
+    def initialize_entities(self):
         #
         #     * Initializes the entities to illustrate how a solution can be created
         #     * used the evolved heuristic. Creates and stores three entities. The
         #     * attribute values for the entities are randomly selected.
         #     
         # Initialize random number generator.  
-        ranGen = Random()
-        # Initialize the entities array.
-        self.entities = [None] * 3
+        random_generator = Random()
         # Loop to create entities.
-        count = 0
-        while count < 3:
-            attribs = [ranGen.randrange(10) + 1, ranGen.randrange(10) + 1, ranGen.randrange(10) + 1]
-            self.entities[count] = Entity()
-            self.entities[count].setAttribs(attribs)
-            count += 1
+        for i in range(3):
+            attribs = [random_generator.randrange(10) + 1 for _ in range(3)]
+            new_entity = Entity()
+            new_entity.set_attributes(attribs)
+            self.entities.append(new_entity)
 
-    def calcHeuristics(self):
-        count = 0
-        while count < len(self.entities):
-            if self.entities[count].getHeuristic() != sys.float_info.max:
-                evaluator = Evaluator(self.attributes, self.entities[count].getAttribs())
-                self.entities[count].setHeuristic(evaluator.eval(self.heuristic))
-            count += 1
+    def calculate_heuristics(self):
+        for entity in self.entities:
+            if entity.get_heuristic() != sys.float_info.max:
+                evaluator = Evaluator(self.attributes, entity.get_attributes())
+                entity.set_heuristic(evaluator.eval(self.heuristic))
 
-    def createSoln(self, attributes):
+    def create_solution(self, attributes):
         self.attributes = attributes
-        self.calcHeuristics()
+        self.calculate_heuristics()
         self.entities.sort()
-        while self.entities[0].getHeuristic() != sys.float_info.max:
-            if self.soln is None:
-                self.soln = []
-            self.soln.append(self.entities[0])
-            self.updateEntities()
-            self.calcHeuristics()
+        while self.entities[0].get_heuristic() != sys.float_info.max:
+            if self.solution is None:
+                self.solution = []
+            self.solution.append(self.entities[0])
+            self.update_entities()
+            self.calculate_heuristics()
             self.entities.sort()
-        entity = self.soln[0]
-        a = entity.getAttribs()
+        entity = self.solution[0]
+        a = entity.get_attributes()
         self.fitness = a[0] + a[1] + a[2]
 
-    def updateEntities(self):
-        self.entities[0].setHeuristic(sys.float_info.max)
+    def update_entities(self):
+        self.entities[0].set_heuristic(sys.float_info.max)
         count = 1
         while count < len(self.entities):
-            attribs = self.entities[count].getAttribs()
+            attribs = self.entities[count].get_attributes()
             attribs[1] -= 1
-            self.entities[count].setAttribs(attribs)
+            self.entities[count].set_attributes(attribs)
             count += 1

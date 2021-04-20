@@ -1,5 +1,5 @@
 #
-#  * This class implements the InitialSoln abstract class and is used to store
+#  * This class implements the Solution abstract class and is used to store
 #  * details of the initial solution.
 #  *
 #  * Nelishia Pillay
@@ -30,7 +30,7 @@ class ExampleSolution(Solution):
     # solved that is different from the fitness or needed to calculate the fitness.
     # For example, for the examination timetabling problem the hard and soft
     # constraint cost also needs to be stored.
-    # Implementation of abstract methods needed to extend InitialSoln
+    # Implementation of abstract methods needed to extend Solution
     def get_fitness(self) -> float:
         return self.fitness
 
@@ -44,12 +44,12 @@ class ExampleSolution(Solution):
         # create the solution.
         return self.heuristic_combination
 
-    def get_solution(self) -> object:
+    def get_solution(self) -> List[str]:
         # Implements the abstract method to return a solution.
         return self.initial_solution
 
     def fitter(self, other: Solution):
-        # This method is used to compare two intial solutions to determine which of
+        # This method is used to compare two initial solutions to determine which of
         # the two is fitter. 
         if other.get_fitness() < self.fitness:
             return 1

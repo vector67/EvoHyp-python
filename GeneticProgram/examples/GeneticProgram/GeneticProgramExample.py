@@ -21,33 +21,31 @@ class GeneticProgramExample(object):
         problem = ExampleProblem()
         seed = round(time.time() * 1000)
         attribs = str("abc")
-        problem.setAttribs(attribs)
-        gchh = GeneticProgram(seed, attribs, 1)
-        gchh.set_parameters("Parameters.txt")
-        gchh.set_problem(problem)
-        sol = gchh.evolve()
+        problem.set_attributes(attribs)
+        genetic_program = GeneticProgram(seed, attribs, 1)
+        genetic_program.set_parameters("Parameters.txt")
+        genetic_program.set_problem(problem)
+        sol = genetic_program.evolve()
         print("Best Solution")
         print("--------------")
-        print("Fitness:", sol.getFitness())
+        print("Fitness:", sol.get_fitness())
         print("Heuristic: ")
-        print((sol.getHeuristic()).__str__())
+        print((sol.get_heuristic()).__str__())
         print("Solution: ")
-        cls.display_solution(sol.getSoln())
+        cls.display_solution(sol.get_solution())
 
     @classmethod
     def display_solution(cls, solution):
         # Displays the solution.
         for element in solution:
-            attribs = element.getAttribs()
+            attribs = element.get_attributes()
             print(attribs[0], attribs[1], attribs[2])
         print()
 
     @classmethod
-    def main(cls, args):
+    def main(cls):
         cls.solve()
 
 
 if __name__ == '__main__':
-    import sys
-
-    GeneticProgramExample.main(sys.argv)
+    GeneticProgramExample.main()

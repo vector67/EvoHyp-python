@@ -7,14 +7,7 @@
 #  * Nelishia Pillay
 #  * 16 January 2017
 #  
-# package: distrgenprog
-# Import statements
 
-# 
-#  * This class implements a genetic programming generation constructive 
-#  * hyper-heuristic for generating new low-level construction heuristics for a 
-#  * problem domain.
-#
 import multiprocessing
 import queue
 from typing import List, Any
@@ -25,6 +18,11 @@ from GeneticProgram.GeneticProgram import GeneticProgram
 from GeneticProgram.Solution import Solution
 
 
+#
+#  * This class implements a genetic programming generation constructive 
+#  * hyper-heuristic for generating new low-level construction heuristics for a 
+#  * problem domain.
+#
 class DistributedGeneticProgram(GeneticProgram):
     # 
     #      * Stores the number of cores.

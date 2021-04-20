@@ -7,7 +7,7 @@
 #  * 
 #  * 8 October 2016
 #  
-# package: createheuristic
+
 import functools
 
 
@@ -19,7 +19,7 @@ class Entity:
     # 
     #  * Stores the attributes for the entity.
     #  
-    attribs: float
+    attributes: float
 
     # 
     #  * Stores the value of the evolved heuristic
@@ -29,25 +29,25 @@ class Entity:
     def __init__(self):
         self.heuristic = 0.0
 
-    def setAttribs(self, attribs):
+    def set_attributes(self, attributes):
         #
         #     * This method sets the attribute values for the entity.
         #     
-        self.attribs = attribs
+        self.attributes = attributes
 
-    def getAttribs(self):
+    def get_attributes(self):
         #
         #     * Returns the attribute values for the entity.
         #     
-        return self.attribs
+        return self.attributes
 
-    def setHeuristic(self, heuristic):
+    def set_heuristic(self, heuristic):
         #
         #     * Sets the heuristic value for the entity.
         #     
         self.heuristic = heuristic
 
-    def getHeuristic(self):
+    def get_heuristic(self):
         #
         #     * Returns the heuristic values for the entity.
         #     
@@ -59,9 +59,9 @@ class Entity:
         #     * entities for the sort that will be used to sort the entities in ascending
         #     * order according to the heuristic to create a solution.
         #     
-        if self.heuristic < other.getHeuristic():
+        if self.heuristic < other.get_heuristic():
             return -1
-        elif self.heuristic > other.getHeuristic():
+        elif self.heuristic > other.get_heuristic():
             return 1
         else:
             return 0

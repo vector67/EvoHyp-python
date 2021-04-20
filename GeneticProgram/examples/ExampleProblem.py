@@ -10,7 +10,6 @@
 #  * 8 October 2016
 #  * 
 #  
-# package: createheuristic
 
 from GeneticProgram.Problem import Problem
 from GeneticProgram.examples.ExampleSolution import ExampleSolution
@@ -29,15 +28,15 @@ class ExampleProblem(Problem):
     def evaluate(self, heuristic):
         #
         #     * Implements the abstract method to create a solution using heuristicComb
-        #     * using an instance of the InitialSoln class which is also used to calculate
+        #     * using an instance of the Solution class which is also used to calculate
         #     * the fitness using the objective value of the created solution.
         #     
-        soln = ExampleSolution()
-        soln.setHeuristic(heuristic)
-        soln.createSoln(self.attributes)
-        return soln
+        solution = ExampleSolution()
+        solution.set_heuristic(heuristic)
+        solution.create_solution(self.attributes)
+        return solution
 
-    def setAttribs(self, attributes):
+    def set_attributes(self, attributes):
         #
         #     * Sets the attribute string.
         #     

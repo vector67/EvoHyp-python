@@ -15,7 +15,8 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from GeneticAlgorithm.GeneticAlgorithmProcess import GeneticAlgorithmProcessCreate, GeneticAlgorithmProcessRegenerate, GeneticAlgorithmProcess
+from GeneticAlgorithm.GeneticAlgorithmProcess import GeneticAlgorithmProcessCreate, GeneticAlgorithmProcessRegenerate, \
+    GeneticAlgorithmProcess
 from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
 from GeneticAlgorithm.Solution import Solution
 
@@ -24,7 +25,7 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     #
     #      * Stores the number of cores.
     #      
-    noOfCores: int
+    no_of_cores: int
 
     processes: List[GeneticAlgorithmProcess]
 
@@ -38,9 +39,9 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     #      * @param noOfCores Specifies the number of cores that the genetic algorithm
     #      * will be distributed over.
     #
-    def __init__(self, seed, heuristics, noOfCores):
+    def __init__(self, seed, heuristics, no_of_cores):
         super().__init__(seed, heuristics)
-        self.noOfCores = noOfCores
+        self.no_of_cores = no_of_cores
         self.processes = []
         self.manager = multiprocessing.Manager()
         self.population_queue = self.manager.Queue()
@@ -50,20 +51,20 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     #      *
     #      * @return Returns the mutation length.
     #      
-    def getNoOfCores(self):
-        return self.noOfCores
+    def get_no_of_cores(self):
+        return self.no_of_cores
 
     #
     #      * Sets the number of cores that the genetic algorithm hyper-heuristics will be
     #      * distributed over.
     #      * @param noOfCores Number of cores available.
     #      
-    def setNoOfCores(self, noOfCores):
-        self.noOfCores = noOfCores
+    def set_no_of_cores(self, no_of_cores):
+        self.no_of_cores = no_of_cores
 
     def create_gen_alg(self):
         gen_alg = GeneticAlgorithm(heuristics=self.heuristics, ran_gen=self.ranGen)
-        gen_alg.set_population_size(int(self.population_size / self.noOfCores))
+        gen_alg.set_population_size(int(self.population_size / self.no_of_cores))
         gen_alg.set_initial_max_length(self.initial_max_length)
         gen_alg.set_problem(self.problem)
         gen_alg.tournament_size = self.tournament_size
@@ -78,7 +79,7 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
         self.population = []
         count = 0
 
-        while count < self.noOfCores:
+        while count < self.no_of_cores:
             gen_alg = self.create_gen_alg()
             process = GeneticAlgorithmProcessCreate(gen_alg, self.population_queue, self.best_queue)
             process.start()
@@ -96,17 +97,11 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
             self.population.extend(self.population_queue.get())
         return best
 
-    def displayPopulation(self):
-        count = 0
-        while len(self.population):
-            print(self.population[count].get_heuristic_combination(), self.population[count].get_fitness())
-            count += 1
-
     def evaluate(self, ind):
         return self.problem.evaluate(ind)
 
     def regenerate(self, best_individual: Solution):
-        core_population_size = int(self.population_size / self.noOfCores)
+        core_population_size = int(self.population_size / self.no_of_cores)
         for i in range(len(self.processes)):
             gen_alg = self.create_gen_alg()
             self.processes[i] = GeneticAlgorithmProcessRegenerate(gen_alg, self.population_queue, self.best_queue,

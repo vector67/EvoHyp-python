@@ -5,8 +5,8 @@
 #  *Nelishia Pillay
 #  *11 September 2016
 #  
-# package: genprog
-# 
+
+#
 #  * This class defines the structure to store the heuristic.
 #
 from typing import List
@@ -43,7 +43,7 @@ class Node(object):
     #      * @param child Child node to be added to the node.
     #      * @param pos   The position at which to add the child, e.g. first child.
     #      
-    def addChild(self, child, pos=-1):
+    def add_child(self, child, pos=-1):
         if pos == -1:
             if self.children is None:
                 self.children = [None] * self.arity
@@ -61,7 +61,7 @@ class Node(object):
     #
     #      * @return Returns the type of the node.
     #      
-    def getType(self):
+    def get_type(self):
         return self.type_
 
     #
@@ -69,12 +69,12 @@ class Node(object):
     #      *
     #      * @param type Specifies the node type e.g. integer.
     #      
-    def setType(self, type_):
+    def set_type(self, type_):
         self.type_ = type_
 
     #      * @return Returns the label of the node.
     #      
-    def getLabel(self):
+    def get_label(self):
         return self.label
 
     # Get Methods
@@ -83,13 +83,13 @@ class Node(object):
     #      *
     #      * @param label Specifies the label of the node, e.g. +.
     #      
-    def setLabel(self, label):
+    def set_label(self, label):
         self.label = label
 
     #
     #      * @return Returns the arity of the node.
     #      
-    def getArity(self):
+    def get_arity(self):
         return self.arity
 
     #
@@ -97,14 +97,14 @@ class Node(object):
     #      *
     #      * @param arity An integer value specifying the arity of the node.
     #      
-    def setArity(self, arity):
+    def set_arity(self, arity):
         self.arity = arity
 
     #
     #      * @param pos The position of the child, e.g. first child.
     #      * @return Returns the child, i.e. node, at the specified position.
     #      
-    def getChild(self, pos):
+    def get_child(self, pos):
         # Returns the child at the position in the array specified by "pos".
         if self.children is not None and len(self.children):
             return self.children[pos]
@@ -114,14 +114,14 @@ class Node(object):
     #
     #      * @return Returns the children of the node in an array of type <tt>Node</tt>.
     #      
-    def getChildren(self):
+    def get_children(self):
         return self.children
 
     #
     #      * Deletes the children of the node.Is used to prune the tree when the offspring
     #      * exceeds the maximum offspring depth.
     #      
-    def clearChildren(self):
+    def clear_children(self):
         self.children = None
 
     #
@@ -136,15 +136,15 @@ class Node(object):
             count += 1
 
     def __str__(self):
-        self.heu = str()
-        self.printInd(self)
+        self.heu = ''
+        self.get_str_with_children(self)
         return self.heu
 
-    def printInd(self, root):
-        if root.getLabel() is not None:
-            self.heu += root.getLabel()
+    def get_str_with_children(self, root):
+        if root.get_label() is not None:
+            self.heu += root.get_label()
         count = 0
         while count < root.arity:
-            self.printInd(root.getChild(count))
+            self.get_str_with_children(root.get_child(count))
             count += 1
         return self.heu

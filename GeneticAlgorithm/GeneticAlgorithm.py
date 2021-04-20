@@ -376,10 +376,8 @@ class GeneticAlgorithm(object):
 
     def display_population(self):
         print("Population")
-        count = 0
-        while len(self.population):
-            print(self.population[count].get_heuristic_combination(), self.population[count].get_fitness())
-            count += 1
+        for element in self.population:
+            print(element.get_heuristic_combination(), element.get_fitness())
 
     def evaluate(self, ind) -> Solution:
         return self.problem.evaluate(ind)
@@ -477,7 +475,7 @@ class GeneticAlgorithm(object):
         self.population = new_population
         return best
 
-    def evolve(self) -> Solution:
+    def evolve(self):
         if self.print_:
             print("Generation 0")
         best = self.create_population()
