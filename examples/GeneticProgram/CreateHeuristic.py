@@ -7,6 +7,7 @@
 #  * 8 October 2016
 #  
 # package: createheuristic
+import time
 
 from GenProg.GenProg import GenProg
 from examples.GeneticProgram.ComOptProb import ComOptProb
@@ -18,7 +19,7 @@ class CreateHeuristic(object):
         # This method illustrates how the selection construction hyper-heuristic in
         # the GenAlg library can be used to solve a combinatorial optimization problem.
         problem = ComOptProb()
-        seed = 12512312352342165867854
+        seed = round(time.time() * 1000)
         attribs = str("abc")
         problem.setAttribs(attribs)
         gchh = GenProg(seed, attribs, 1)

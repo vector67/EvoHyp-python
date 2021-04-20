@@ -7,9 +7,11 @@
 #  * N. Pillay
 #  *
 #  * 30 August 2016
-#  
+#
 # package: solveproblem
 # Import statements
+import time
+
 from GenAlg.GenAlg import GenAlg
 from examples.GeneticAlgorithm.ComOptProb import ComOptProb
 
@@ -20,7 +22,7 @@ class GeneticAlgorithmExample(object):
         # This method illustrates how the selection construction hyper-heuristic in
         # the GenAlg library can be used to solve a combinatorial optimization problem.
         problem = ComOptProb()
-        seed = 23498263498
+        seed = round(time.time() * 1000)
         heuristics = "abc"
         schh = GenAlg(seed, heuristics)
         schh.set_parameters("../../GenAlg/Parameters.txt")

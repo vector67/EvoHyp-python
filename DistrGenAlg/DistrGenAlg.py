@@ -12,8 +12,9 @@
 #  * distributed multi-core architecture.
 #
 import multiprocessing
+import queue
 from random import Random
-from typing import List
+from typing import List, Any
 
 from DistrGenAlg.MultiProcessGenAlg import MultiProcessGenAlgCreate, MultiProcessGenAlgRegen, MultiProcessGenAlg
 from GenAlg.GenAlg import GenAlg
@@ -28,6 +29,9 @@ class DistrGenAlg(GenAlg):
 
     processes: List[MultiProcessGenAlg]
 
+    population_queue: queue.Queue[Any]
+    best_queue: queue.Queue[Any]
+
     #
     #      * This is the constructor for the class.
     #      * @param seed The seed for the random number generator.
@@ -37,10 +41,7 @@ class DistrGenAlg(GenAlg):
     #
     def __init__(self, seed, heuristics, noOfCores):
         super().__init__(seed, heuristics)
-        self.heuristics = heuristics
-        self.ranGen = Random(seed)
         self.noOfCores = noOfCores
-        self.print_ = True
         self.processes = []
         self.manager = multiprocessing.Manager()
         self.population_queue = self.manager.Queue()

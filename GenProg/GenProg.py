@@ -174,6 +174,19 @@ class GenProg(object):
         self.set_operators()
         self.set_terms()
 
+    def clone(self) -> 'GenProg':
+        gen_program = GenProg(self.seed, self.attributes, self.heuristic_type)
+        gen_program.population_size = self.population_size
+        gen_program.tournament_size = self.tournament_size
+        gen_program.no_of_generations = self.no_of_generations
+        gen_program.mutation_rate = self.mutation_rate
+        gen_program.crossover_rate = self.crossover_rate
+        gen_program.max_depth = self.max_depth
+        gen_program.offspring_depth = self.offspring_depth
+        gen_program.mutation_depth = self.mutation_depth
+        gen_program.problem = self.problem
+        return gen_program
+
     # Methods for setting parameter values for the genetic algorithm
     #
     #      * Reads the parameters from a file and stores them as data element.
