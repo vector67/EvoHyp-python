@@ -15,9 +15,9 @@ import multiprocessing
 import queue
 from typing import List, Any
 
-from GeneticAlgorithm.Distributed.GenAlgProcess import GenAlgProcessCreate, GenAlgProcessRegen, GenAlgProcess
+from GeneticAlgorithm.GeneticAlgorithmProcess import GeneticAlgorithmProcessCreate, GeneticAlgorithmProcessRegenerate, GeneticAlgorithmProcess
 from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
-from GeneticAlgorithm.InitialSolution import InitialSolution
+from GeneticAlgorithm.Solution import Solution
 
 
 class DistributedGeneticAlgorithm(GeneticAlgorithm):
@@ -26,7 +26,7 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     #      
     noOfCores: int
 
-    processes: List[GenAlgProcess]
+    processes: List[GeneticAlgorithmProcess]
 
     population_queue: queue.Queue[Any]
     best_queue: queue.Queue[Any]
@@ -74,18 +74,18 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
         gen_alg.mutation_length = self.mutation_length
         return gen_alg
 
-    def create_population(self) -> InitialSolution:
+    def create_population(self) -> Solution:
         self.population = []
         count = 0
 
         while count < self.noOfCores:
             gen_alg = self.create_gen_alg()
-            process = GenAlgProcessCreate(gen_alg, self.population_queue, self.best_queue)
+            process = GeneticAlgorithmProcessCreate(gen_alg, self.population_queue, self.best_queue)
             process.start()
             self.processes.append(process)
             count += 1
 
-        best: InitialSolution = None
+        best: Solution = None
         for process in self.processes:
             process.join()
             possible_best = self.best_queue.get()
@@ -105,12 +105,12 @@ class DistributedGeneticAlgorithm(GeneticAlgorithm):
     def evaluate(self, ind):
         return self.problem.evaluate(ind)
 
-    def regenerate(self, best_individual: InitialSolution):
+    def regenerate(self, best_individual: Solution):
         core_population_size = int(self.population_size / self.noOfCores)
         for i in range(len(self.processes)):
             gen_alg = self.create_gen_alg()
-            self.processes[i] = GenAlgProcessRegen(gen_alg, self.population_queue, self.best_queue,
-                                                   self.population[i * core_population_size])
+            self.processes[i] = GeneticAlgorithmProcessRegenerate(gen_alg, self.population_queue, self.best_queue,
+                                                                  self.population[i * core_population_size])
             self.population_queue.put(self.population[i * core_population_size: (i + 1) * core_population_size])
 
         for process in self.processes:

@@ -13,7 +13,7 @@
 import time
 
 from GeneticAlgorithm.GeneticAlgorithm import GeneticAlgorithm
-from GeneticAlgorithm.examples.GeneticAlgorithm.ComOptProb import ComOptProb
+from GeneticAlgorithm.examples.ExampleProblem import ExampleProblem
 
 
 class GeneticAlgorithmExample(object):
@@ -21,11 +21,11 @@ class GeneticAlgorithmExample(object):
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
         # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
-        problem = ComOptProb()
+        problem = ExampleProblem()
         seed = round(time.time() * 1000)
         heuristics = "abc"
         schh = GeneticAlgorithm(seed, heuristics)
-        schh.set_parameters("../../GeneticAlgorithm/Parameters.txt")
+        schh.set_parameters("Parameters.txt")
         schh.set_problem(problem)
         solution = schh.evolve()
         print("Best Solution")

@@ -8,9 +8,9 @@
 #
 import time
 
-from GeneticProgram.Distributed.DistributedGeneticProgram import DistributedGeneticProgram
+from GeneticProgram.DistributedGeneticProgram import DistributedGeneticProgram
 from GeneticProgram.Solution import Solution
-from GeneticProgram.examples.DistributedGeneticProgram.ComOptProb import ComOptProb
+from GeneticProgram.examples.ExampleProblem import ExampleProblem
 
 
 class DistributedGeneticProgramExample(object):
@@ -18,7 +18,7 @@ class DistributedGeneticProgramExample(object):
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
         # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
-        problem = ComOptProb()
+        problem = ExampleProblem()
         seed = round(time.time() * 1000)
         attribs = str("abc")
         problem.setAttribs(attribs)
@@ -32,12 +32,12 @@ class DistributedGeneticProgramExample(object):
         print("Heuristic: ")
         print((solution.getHeuristic()).__str__())
         print("Solution: ")
-        DistributedGeneticProgramExample.displaySolution(solution)
+        DistributedGeneticProgramExample.display_solution(solution)
 
     @classmethod
-    def displaySolution(cls, soln: Solution):
+    def display_solution(cls, solution: Solution):
         # Displays the solution.
-        print(' '.join([' '.join(list(map(str, [attribs.getAttribs()[i] for i in range(3)]))) for attribs in soln.getSoln()]))
+        print(' '.join([' '.join(list(map(str, [attribs.getAttribs()[i] for i in range(3)]))) for attribs in solution.getSoln()]))
 
     @classmethod
     def main(cls, args):

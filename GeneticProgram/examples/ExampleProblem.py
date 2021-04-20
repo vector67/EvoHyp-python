@@ -13,10 +13,10 @@
 # package: createheuristic
 
 from GeneticProgram.Problem import Problem
-from GeneticProgram.examples.GeneticProgram.ComOptSoln import ComOptSoln
+from GeneticProgram.examples.ExampleSolution import ExampleSolution
 
 
-class ComOptProb(Problem):
+class ExampleProblem(Problem):
     #
     #   * Data elements
     #   
@@ -32,7 +32,7 @@ class ComOptProb(Problem):
         #     * using an instance of the InitialSoln class which is also used to calculate
         #     * the fitness using the objective value of the created solution.
         #     
-        soln = ComOptSoln()
+        soln = ExampleSolution()
         soln.setHeuristic(heuristic)
         soln.createSoln(self.attributes)
         return soln

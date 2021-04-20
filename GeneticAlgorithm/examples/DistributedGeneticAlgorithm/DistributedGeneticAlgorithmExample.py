@@ -8,9 +8,11 @@
 #  * 30 August 2016
 #
 import time
+from typing import List
 
-from GeneticAlgorithm.Distributed.DistributedGeneticAlgorithm import DistributedGeneticAlgorithm
-from GeneticAlgorithm.examples.DistributedGeneticAlgorithm.ComOptProb import ComOptProb
+from GeneticAlgorithm.DistributedGeneticAlgorithm import DistributedGeneticAlgorithm
+from GeneticAlgorithm.Solution import Solution
+from GeneticAlgorithm.examples.ExampleProblem import ExampleProblem
 
 
 class SolveProblem(object):
@@ -18,13 +20,13 @@ class SolveProblem(object):
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
         # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
-        problem = ComOptProb()
+        problem = ExampleProblem()
         seed = round(time.time() * 1000)
         heuristics = str("abc")
         schh = DistributedGeneticAlgorithm(seed, heuristics, 4)
         schh.set_parameters("../../Distributed/Parameters.txt")
         schh.set_problem(problem)
-        solution = schh.evolve()
+        solution: Solution = schh.evolve()
         print("Best Solution")
         print("--------------")
         print("Fitness: ", solution.get_fitness())
@@ -33,7 +35,7 @@ class SolveProblem(object):
         SolveProblem.displaySolution(solution.get_solution())
 
     @classmethod
-    def displaySolution(cls, solution):
+    def displaySolution(cls, solution: List):
         # Displays the solution.
         print(' '.join(solution))
 

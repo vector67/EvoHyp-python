@@ -1,5 +1,5 @@
-class InitialSolution:
-    def fitter(self, fit: "InitialSolution") -> int:
+class Solution:
+    def fitter(self, fit: "Solution") -> int:
         pass
 
     def get_fitness(self) -> float:

@@ -6,19 +6,19 @@
 #  * 
 #  * 8 October 2016
 #  
-# package: createheuristic
+
 import time
 
 from GeneticProgram.GeneticProgram import GeneticProgram
-from GeneticProgram.examples.GeneticProgram.ComOptProb import ComOptProb
+from GeneticProgram.examples.ExampleProblem import ExampleProblem
 
 
-class CreateHeuristic(object):
+class GeneticProgramExample(object):
     @classmethod
     def solve(cls):
         # This method illustrates how the selection construction hyper-heuristic in
         # the GeneticAlgorithm library can be used to solve a combinatorial optimization problem.
-        problem = ComOptProb()
+        problem = ExampleProblem()
         seed = round(time.time() * 1000)
         attribs = str("abc")
         problem.setAttribs(attribs)
@@ -32,18 +32,14 @@ class CreateHeuristic(object):
         print("Heuristic: ")
         print((sol.getHeuristic()).__str__())
         print("Solution: ")
-        cls.displaySolution(sol.getSoln())
+        cls.display_solution(sol.getSoln())
 
     @classmethod
-    def displaySolution(cls, soln):
+    def display_solution(cls, solution):
         # Displays the solution.
-        count = 0
-        while count < len(soln):
-            attribs = soln[count].getAttribs()
+        for element in solution:
+            attribs = element.getAttribs()
             print(attribs[0], attribs[1], attribs[2])
-            print()
-            count += 1
-        # EndforCount
         print()
 
     @classmethod
@@ -54,4 +50,4 @@ class CreateHeuristic(object):
 if __name__ == '__main__':
     import sys
 
-    CreateHeuristic.main(sys.argv)
+    GeneticProgramExample.main(sys.argv)

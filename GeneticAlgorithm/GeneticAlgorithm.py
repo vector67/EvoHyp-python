@@ -13,8 +13,8 @@ from typing import List
 # hyper-heuristic for selecting low-level constructive or perturbative
 # heuristics for a problem domain.
 #
-from GeneticAlgorithm.InitialSolution import InitialSolution
-from GeneticAlgorithm.ProblemDomain import ProblemDomain
+from GeneticAlgorithm.Solution import Solution
+from GeneticAlgorithm.Problem import Problem
 
 
 class GeneticAlgorithm(object):
@@ -84,7 +84,7 @@ class GeneticAlgorithm(object):
     # 
     # This variable stores a problem domain instance.
     #      
-    problem: ProblemDomain
+    problem: Problem
 
     # 
     # Stores and instances of the random number generator to be used by the genetic
@@ -96,7 +96,7 @@ class GeneticAlgorithm(object):
     # Stores the population.Each element is an instance of type InitialSolution.This
     # instance stores the heuristic combination, fitness and initial solution.
     #      
-    population: List[InitialSolution]
+    population: List[Solution]
 
     # 
     # Is a flag used to determine whether output for each generation must be
@@ -353,7 +353,7 @@ class GeneticAlgorithm(object):
             count += 1
         return heuristic_combination
 
-    def create_population(self) -> InitialSolution:
+    def create_population(self) -> Solution:
         best = None
         self.population = []
         count = 0
@@ -381,10 +381,10 @@ class GeneticAlgorithm(object):
             print(self.population[count].get_heuristic_combination(), self.population[count].get_fitness())
             count += 1
 
-    def evaluate(self, ind) -> InitialSolution:
+    def evaluate(self, ind) -> Solution:
         return self.problem.evaluate(ind)
 
-    def selection(self) -> InitialSolution:
+    def selection(self) -> Solution:
         winner = self.ranGen.choice(self.population)
         count = 2
         while count <= self.tournament_size:
@@ -395,7 +395,7 @@ class GeneticAlgorithm(object):
         print('winner', winner)
         return winner
 
-    def crossover(self, parent1: InitialSolution, parent2: InitialSolution) -> InitialSolution:
+    def crossover(self, parent1: Solution, parent2: Solution) -> Solution:
         p1 = parent1.get_heuristic_combination()
         p2 = parent2.get_heuristic_combination()
         point1 = self.ranGen.randrange(len(p1))
@@ -427,7 +427,7 @@ class GeneticAlgorithm(object):
             count += 1
         return str_
 
-    def mutation(self, parent: InitialSolution):
+    def mutation(self, parent: Solution):
         com = parent.get_heuristic_combination()
         print('com', com)
         mutation_point = self.ranGen.randrange(len(com))
@@ -442,7 +442,7 @@ class GeneticAlgorithm(object):
         offspring.set_heuristic_combination(tem)
         return offspring
 
-    def regenerate(self, best_individual) -> InitialSolution:
+    def regenerate(self, best_individual) -> Solution:
         number_of_mutations = int((self.mutation_rate * self.population_size))
         number_of_crossovers = int((self.crossover_rate * self.population_size))
         self.reproduction_rate = 0
@@ -458,7 +458,7 @@ class GeneticAlgorithm(object):
                         number_of_mutations + number_of_crossovers + number_of_reproductions)
         best = best_individual
         index = 0
-        new_population: List[InitialSolution] = []
+        new_population: List[Solution] = []
         for i in range(number_of_reproductions):
             new_population.append(self.selection())
             if new_population[index].fitter(best) == 1:
@@ -477,7 +477,7 @@ class GeneticAlgorithm(object):
         self.population = new_population
         return best
 
-    def evolve(self) -> InitialSolution:
+    def evolve(self) -> Solution:
         if self.print_:
             print("Generation 0")
         best = self.create_population()

@@ -4,7 +4,7 @@ from multiprocessing import Queue
 from GeneticProgram.GeneticProgram import GeneticProgram
 
 
-class GenProgramProcess(mp.Process):
+class GeneticProgramProcess(mp.Process):
     def __init__(self, gen_program: GeneticProgram, population_queue: Queue, best_queue: Queue):
         super().__init__()
         self.gen_program = gen_program
@@ -14,7 +14,7 @@ class GenProgramProcess(mp.Process):
         self.best_queue = best_queue
 
 
-class GenProgramProcessCreate(GenProgramProcess):
+class GeneticProgramProcessCreate(GeneticProgramProcess):
     def __init__(self, gen_program: GeneticProgram, population_queue: Queue, best_queue: Queue):
         super().__init__(gen_program, population_queue, best_queue)
 
@@ -24,7 +24,7 @@ class GenProgramProcessCreate(GenProgramProcess):
         self.population_queue.put(self.gen_program.population)
 
 
-class GenProgramProcessRegenerate(GenProgramProcess):
+class GeneticProgramProcessRegenerate(GeneticProgramProcess):
     def __init__(self, gen_program: GeneticProgram, population_queue: Queue, best_queue: Queue, best):
         super().__init__(gen_program, population_queue, best_queue)
         self.best = best
