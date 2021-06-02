@@ -114,8 +114,9 @@ class GeneticAlgorithm(object):
     #                   heuristics for the problem domain.
     #      
     def __init__(self, seed=123, heuristics='', ran_gen=None):
+        if heuristics == '':
+            raise ValueError('Heuristics cannot be empty')
         self.heuristics = heuristics
-        print("Seed", seed)
         # Initializes the random number generator.
         if seed == 123 and ran_gen is not None:
             self.ranGen = ran_gen
@@ -384,13 +385,14 @@ class GeneticAlgorithm(object):
 
     def selection(self) -> Solution:
         winner = self.ranGen.choice(self.population)
-        count = 2
-        while count <= self.tournament_size:
+        count = 1
+        while count < self.tournament_size:
             current = self.ranGen.choice(self.population)
             if current.fitter(winner) == 1:
                 winner = current
             count += 1
-        print('winner', winner)
+        if self.print_:
+            print('winner', winner)
         return winner
 
     def crossover(self, parent1: Solution, parent2: Solution) -> Solution:
@@ -427,7 +429,8 @@ class GeneticAlgorithm(object):
 
     def mutation(self, parent: Solution):
         com = parent.get_heuristic_combination()
-        print('com', com)
+        if self.print_:
+            print('com', com)
         mutation_point = self.ranGen.randrange(len(com))
         mutation_length = self.ranGen.randrange(self.mutation_length) + 1
         hh = self.create_string(mutation_length)
@@ -483,10 +486,10 @@ class GeneticAlgorithm(object):
             print("Best Fitness:", best.get_fitness())
             print("Heuristic Combination:", best.get_heuristic_combination())
             print()
-        count = 1
-        while count <= self.no_of_generations:
+        count = 0
+        while count < self.no_of_generations:
             if self.print_:
-                print("Generation", count)
+                print("Generation", count+1)
             ind = self.regenerate(best)
             if ind.fitter(best) == 1:
                 best = ind
