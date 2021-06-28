@@ -15,3 +15,7 @@ This library is split into two halves, GeneticAlgorithm and GeneticProgram.
 Each of those has a normal single threaded version, and then a distributed version.
 The examples folders show how to use each one and include example problem and solutions.
 As this library grows, more examples will be added for more complex domains.
+
+## License
+
+This software is released under a creative commons license which allows for personal and research use only. For a commercial license please contact the authors. You can view a license summary [here](http://creativecommons.org/licenses/by-nc/4.0/).
