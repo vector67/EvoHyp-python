@@ -406,9 +406,9 @@ class GeneticAlgorithm(object):
         frag22 = p2[point2:]
         os1 = str(frag11 + frag22)
         os2 = str(frag21 + frag12)
-        if self.offspring_max_length > 0 and self.offspring_max_length > len(os1):
+        if self.offspring_max_length > 0 and self.offspring_max_length < len(os1):
             os1 = os1[:self.offspring_max_length]
-        if self.offspring_max_length > 0 and self.offspring_max_length > len(os2):
+        if self.offspring_max_length > 0 and self.offspring_max_length < len(os2):
             os2 = os2[:self.offspring_max_length]
         offspring1 = self.evaluate(os1)
         offspring1.set_heuristic_combination(os1)
@@ -437,7 +437,7 @@ class GeneticAlgorithm(object):
         begin = com[: mutation_point]
         end = com[mutation_point + 1:]
         tem = begin + hh + end
-        if self.offspring_max_length > 0 and self.offspring_max_length > len(tem):
+        if self.offspring_max_length > 0 and self.offspring_max_length < len(tem):
             tem = tem[:self.offspring_max_length]
         offspring = self.evaluate(tem)
         offspring.set_heuristic_combination(tem)
